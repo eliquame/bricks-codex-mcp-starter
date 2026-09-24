@@ -5,6 +5,7 @@ All notable changes to this starter workflow should be documented here.
 ## [Unreleased]
 
 ### Added
+- One-prompt `START-HERE.md` orchestration: Codex initializes AGENTS/docs, guides MCP setup securely, verifies skills, and runs the bootstrap audit itself.
 - Site maturity handling for ESTABLISHED, PARTIAL / IN PROGRESS, and GREENFIELD projects.
 - Design-system authority/provenance handling for Bricks-native, external framework, hybrid, custom-code-driven, and undefined systems.
 - External CSS/design-framework detection and ownership rules, including provider-owned classes/variables/tokens.
@@ -18,6 +19,9 @@ All notable changes to this starter workflow should be documented here.
 - Setup, workflow, and security documentation.
 
 ### Changed
+- README simplified around a single copy-to-Codex bootstrap prompt; users no longer manually create starter project files.
+- `project-starter/` is now an internal source consumed by Codex rather than a manual user copy step.
+- Removed the superseded `prompts/COPY-TO-CODEX-SETUP-WIZARD.md`; root `START-HERE.md` is canonical.
 - Bootstrap now refines an existing canonical AGENTS policy instead of generating project rules from scratch.
 - Real-world bootstrap test patterns were incorporated into the default AGENTS workflow and documentation structure.
 - Removed the duplicate `templates/AGENTS.template.md` source to avoid ambiguity; `project-starter/AGENTS.md` is canonical.
