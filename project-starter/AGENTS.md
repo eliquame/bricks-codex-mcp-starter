@@ -136,6 +136,26 @@ If ACTIVE:
 - never expose private customer/order data in project documentation;
 - never modify operational commerce data or configuration unless explicitly requested.
 
+## Task workflow routing
+
+For normal site work, infer the workflow from the user's request. The user should not need to know prompt filenames.
+
+When the starter repository is accessible, use the matching canonical workflow as additional task guidance:
+
+- global design-system change → `prompts/10-design-system-change-workflow.md`
+- GREENFIELD design-system creation/seed → `prompts/11-greenfield-design-system-seed.md`
+- new page → `prompts/20-new-page-build-workflow.md`
+- existing page edit → `prompts/21-existing-page-edit-workflow.md`
+- Bricks template/header/footer/archive/single change → `prompts/22-template-change-workflow.md`
+- CPT/field/taxonomy/relationship/query/plugin-owned data architecture change → `prompts/30-plugin-data-architecture-change-workflow.md`
+- WooCommerce + Bricks work → `prompts/31-woocommerce-workflow.md`
+- limited read-only re-audit → `prompts/80-targeted-reaudit.md`
+- AGENTS/project-profile synchronization → `prompts/90-agents-maintenance-and-sync.md`
+
+If the starter repository is not currently accessible, follow the equivalent rules embedded in this AGENTS.md and the local `docs/bricks/` knowledge base rather than blocking ordinary work.
+
+Do not make the user manually select a workflow when their intent is already clear.
+
 ## New page workflow in a fresh task
 
 When asked to create a page:
