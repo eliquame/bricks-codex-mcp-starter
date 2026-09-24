@@ -93,6 +93,7 @@ Read at minimum from the STARTER REPOSITORY, not from the target project:
 - project-starter/docs/bricks/README.md
 - prompts/00-full-site-bootstrap-audit.md
 - prompts/10-design-system-change-workflow.md
+- prompts/11-greenfield-design-system-seed.md
 - prompts/90-agents-maintenance-and-sync.md
 - docs/setup-bricks-mcp.md
 - docs/setup-codex.md
@@ -307,6 +308,7 @@ At the end report:
 - primary data/content providers
 - primary CSS/design-system provider
 - WooCommerce status
+- recommended next workflow, if applicable (for example GREENFIELD design-system seed)
 - bootstrap audit COMPLETE / PARTIAL
 - any permissions that limited the audit
 
@@ -317,6 +319,8 @@ Update docs/bricks/00-bootstrap-status.md to:
 Do not report or expose secrets.
 
 If the bootstrap required temporarily elevated WordPress permissions, remind me that routine work should use the minimum permissions needed after the audit.
+
+If SITE_MATURITY = GREENFIELD and DESIGN_SYSTEM_STATE = UNDEFINED or materially incomplete, recommend `prompts/11-greenfield-design-system-seed.md` as the next workflow rather than starting arbitrary page design.
 
 Do not make any site write after the audit unless I explicitly request a new task.
 ```
