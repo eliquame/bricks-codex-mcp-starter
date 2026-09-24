@@ -81,7 +81,7 @@ Examples:
 
 - `01-plugin-ecosystem.md` is useful on every non-trivial site, but plugin-specific detail files are created only for architecture-relevant plugins/providers.
 - `02-data-architecture.md` becomes deeper when ACF, JetEngine, ACPT, Meta Box, custom CPTs/fields, relationships, or other data systems are present.
-- `14-woocommerce.md` is required only when WooCommerce is installed/active; otherwise status can be recorded without inventing content.
+- `14-woocommerce.md` may always exist as a concise status record because WooCommerce detection is mandatory. When WooCommerce is not installed or inactive, keep it minimal and do not fabricate a deep audit.
 - deep frontend visual references are required for ESTABLISHED sites, limited for PARTIAL sites, and may be NOT APPLICABLE / INSUFFICIENT EVIDENCE on GREENFIELD sites.
 - empty files should not be created merely to satisfy a template.
 
