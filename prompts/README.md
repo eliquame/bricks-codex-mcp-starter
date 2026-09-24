@@ -13,6 +13,7 @@ These prompts are reusable workflow entry points. They are not site-specific.
 | `30-plugin-data-architecture-change-workflow.md` | Changes CPTs, fields, taxonomies, relationships, queries, or other provider-owned data architecture. |
 | `31-woocommerce-workflow.md` | WooCommerce + Bricks layout/template/data workflow with commerce-specific safety rules. |
 | `80-targeted-reaudit.md` | Read-only re-audit of a limited area after material project changes. |
+| `81-existing-project-upgrade.md` | Reconciles an older site project against the current starter without losing site-specific knowledge. |
 | `90-agents-maintenance-and-sync.md` | Synchronizes the site-specific AGENTS profile/routing after material evolution. |
 
 ## Numbering convention
