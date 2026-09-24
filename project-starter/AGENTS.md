@@ -1,0 +1,307 @@
+# Bricks + Codex MCP Project Rules
+
+This is the default operating policy for one site-specific WordPress / Bricks Codex project.
+
+It is loaded before the first project task. The bootstrap audit must refine the PROJECT PROFILE and site-specific routing below with verified facts, while preserving the general safety, verification, ownership, and workflow rules unless the user explicitly changes them.
+
+## Project profile
+
+Until verified by the bootstrap audit, use these states:
+
+- Site name: UNKNOWN
+- Site URL: UNKNOWN
+- Allowed MCP server: UNKNOWN
+- Bootstrap status: NOT RUN
+- Site maturity: UNKNOWN
+- Design-system state: UNKNOWN
+- Design-system authority: UNKNOWN
+- WooCommerce status: UNKNOWN
+- Primary data/content providers: UNKNOWN
+- Primary CSS/design-system provider: UNKNOWN
+
+Do not guess these values. Populate them from live evidence.
+
+## Project isolation
+
+- This project belongs to exactly one WordPress / Bricks site.
+- After the MCP server is verified, use only that site's MCP server unless the user explicitly requests cross-site work.
+- Never carry site-specific classes, variables, templates, plugin assumptions, visual rules, or cached documentation from another project into this one.
+- If several WordPress MCP servers are configured and the correct target is ambiguous, stop before any site write.
+
+## Sources of truth
+
+- **Live Bricks MCP state** is authoritative for current Bricks structure and configuration.
+- **Live WordPress/plugin state** is authoritative for current integration, data-model, and provider architecture.
+- **Rendered frontend in the browser** is authoritative for actual visual appearance and responsive behavior.
+- **Local files under `docs/bricks/`** are durable cached references, not guaranteed-current runtime state.
+
+If local documentation disagrees with accessible live state, follow the relevant live source and update stale documentation after a verified change. Never silently rewrite documentation from assumptions.
+
+## Bricks workflow
+
+- Use Bricks MCP abilities for inspecting or modifying Bricks-managed site resources.
+- Read only the task-relevant Bricks skill(s); do not load the entire skill catalog without need.
+- Use the current MCP ability schema as the operation contract.
+- Inspect the existing target resource and relevant design/data dependencies before proposing changes.
+- Reuse existing global classes, variables, components, queries, fields, templates, and naming conventions wherever appropriate.
+- Do not create duplicate classes, variables, tokens, fields, CPTs, taxonomies, relationships, or queries when a suitable existing resource already exists.
+- Prefer Bricks-native controls and structures when the site is Bricks-native, but respect external framework/provider ownership where present.
+- Prefer the smallest scoped change that satisfies the request.
+
+## Site maturity
+
+Classify the site as:
+
+- **ESTABLISHED** — meaningful live content and a recurring visual language exist.
+- **PARTIAL / IN PROGRESS** — some real patterns exist, but the system is incomplete.
+- **GREENFIELD** — no meaningful established visual language exists yet.
+
+For ESTABLISHED sites, use the public frontend as a major design reference.
+
+For PARTIAL sites, distinguish strong recurring patterns from experiments and one-offs.
+
+For GREENFIELD sites:
+
+- do not invent site-wide rules from generic Bricks or WordPress defaults;
+- inspect whether Theme Styles, a CSS framework, tokens, classes, variables, a visual brief, or other approved foundation already exists;
+- if the design system is undefined, establish or explicitly approve a design-system direction before broad page design.
+
+## Design-system authority and ownership
+
+Classify the design-system authority as one of:
+
+- **BRICKS NATIVE**
+- **EXTERNAL FRAMEWORK**
+- **HYBRID**
+- **CUSTOM CODE DRIVEN**
+- **UNKNOWN / UNDEFINED**
+
+Classify design-system state as:
+
+- **ESTABLISHED**
+- **PARTIAL**
+- **UNDEFINED**
+
+Track ownership/provenance for global design resources where possible:
+
+- BRICKS OWNED
+- FRAMEWORK / PLUGIN OWNED
+- THEME / CHILD-THEME OWNED
+- CUSTOM-CODE OWNED
+- PAGE-LOCAL
+- UNKNOWN
+
+Never assume a class, variable, or token is Bricks-owned merely because it is visible inside Bricks.
+
+If an external CSS/design framework such as Core Framework or another equivalent provider owns classes, variables, tokens, spacing, typography, colors, or breakpoints:
+
+- treat that provider as the source of truth for those resources;
+- document where they are configured and how they are exposed/synchronized into Bricks;
+- do not create redundant Bricks-native copies;
+- do not edit provider-owned resources through the wrong layer.
+
+## Plugin-aware architecture
+
+Before creating or restructuring any of the following, inspect the existing plugin/data architecture:
+
+- CPTs
+- taxonomies
+- custom fields
+- repeaters
+- option pages
+- relationships
+- queries
+- listings
+- forms
+- dynamic visibility
+- commerce structures
+- design-system providers
+
+Potential systems include ACF / ACF Pro, JetEngine, ACPT / ACPT Pro, Meta Box, Pods, Toolset, Carbon Fields, WooCommerce, Bricks extensions, custom plugins, child-theme code, and other site-specific systems.
+
+Do not recreate functionality already provided by an active system unless the user explicitly requests rearchitecture or migration.
+
+## WooCommerce
+
+Always determine WooCommerce status:
+
+- NOT INSTALLED
+- INSTALLED / INACTIVE
+- ACTIVE
+
+If ACTIVE:
+
+- inspect the existing WooCommerce + Bricks architecture before commerce-related layout or data changes;
+- inspect relevant templates, attributes, taxonomies, custom fields, and dynamic data where permitted;
+- never expose private customer/order data in project documentation;
+- never modify operational commerce data or configuration unless explicitly requested.
+
+## New page workflow in a fresh task
+
+When asked to create a page:
+
+1. Read this `AGENTS.md`.
+2. Read the task-relevant site rules, design-system documentation, visual references/patterns, site inventory, and audit findings under `docs/bricks/`.
+3. Identify the closest existing page/template/pattern when the site is ESTABLISHED or PARTIAL; inspect the relevant individual page/template docs.
+4. Inspect the exact shared resources the new page may use: Theme Styles, classes, variables/tokens, components, plugin/data bindings, queries, and relevant settings.
+5. Re-check the comparable public frontend and every affected live resource through the assigned MCP server. Confirm that cached documentation, routing, ownership, and permissions still match.
+6. For a significant page, explain the proposed structure, reuse choices, and any new global resources before writing.
+7. Build only the requested page. Use preview/dry-run/planning abilities for non-trivial work where available.
+8. Read back persisted state and visually verify wide, tablet, and mobile behavior where relevant.
+9. Update only documentation whose architectural or design facts materially changed.
+
+For GREENFIELD sites with no established visual language, do not pretend an existing site style can be copied. Follow the approved design-system/brief direction instead.
+
+## Existing page / template workflow
+
+When modifying an existing resource:
+
+1. Read the relevant cached documentation.
+2. Re-read the current live target, conditions, dependencies, classes, variables/tokens, components, queries, and provider-owned resources.
+3. Inspect the rendered frontend when the task affects appearance or responsive behavior.
+4. Keep the change to the requested scope.
+5. Avoid opportunistic cleanup of unrelated architecture.
+6. Verify persisted state and relevant frontend behavior after writing.
+7. Update only documentation made stale by the change.
+
+## Skill routing
+
+- Use `bricks-start-here` for broad or unclear Bricks tasks.
+- For a known focused target, prefer the narrow live MCP abilities that match the task.
+- Use `bricks-agent-repository` only when focused abilities cannot express a complex existing-site change and the host advertises that route.
+- Use `bricks-design-systems` for Theme Styles, global classes, variables, palettes, and related design-system work.
+- Use `bricks-components` for component definitions or instances.
+- Use `bricks-templates-conditions` for template placement/routing.
+- Use `bricks-element-conditions` for element visibility.
+- Use `bricks-forms` for Bricks forms.
+- Use `bricks-dynamic-data` for dynamic bindings; add `bricks-query-loops` when repeater, relationship, post, term, or other loop context is involved.
+- Read `bricks-element-schemas` when writing unfamiliar or complex controls.
+- Use `bricks-site-audit` or `bricks-audit-design-system` only when an audit of that scope is actually needed.
+- Use `bricks-quality-gate` for broad, destructive, multi-resource, global, or uncertain writes.
+- Use `bricks-browser-verify` for affected frontend, responsive, or interactive behavior.
+- Keep verification proportional to the change.
+
+## Global design-system changes
+
+Treat changes to these resources as **global-impact changes**:
+
+- Bricks Theme Styles
+- global classes
+- global variables
+- global breakpoints
+- external framework classes/tokens/variables
+- global typography/color/spacing systems
+- design-system custom code
+
+Before changing them:
+
+1. verify the authoritative owner/provider;
+2. re-read current live state;
+3. identify dependent or representative pages/templates;
+4. estimate blast radius;
+5. preserve a useful pre-change snapshot/reference where practical.
+
+After changing them:
+
+1. re-read persisted global state;
+2. verify representative affected pages/templates;
+3. verify relevant viewport widths;
+4. inspect cascade/regression effects;
+5. update affected design-system documentation and snapshots;
+6. record intentional breaking changes or required migration work.
+
+Do not perform opportunistic global cleanup during a scoped change.
+
+## Permission-aware access
+
+- The bootstrap audit may temporarily use higher privileges than routine work.
+- An inaccessible resource is not evidence that it is absent.
+- If a documented resource cannot currently be read, treat its docs as historical reference and state that live status is unverified.
+- When relevant, label evidence as **VERIFIED LIVE**, **CACHED / PREVIOUSLY AUDITED**, **LIVE ACCESS BLOCKED**, **NOT VERIFIED**, **NOT APPLICABLE**, or **INSUFFICIENT EVIDENCE**.
+- Do not request or attempt privilege escalation automatically.
+- Do not use elevated access merely for convenience.
+- If the task requires inaccessible live resources, stop before the blocked write and explain what access is missing and why it is required.
+
+## Site write checklist
+
+Before writing:
+
+1. Read this file and task-relevant `docs/bricks/` references.
+2. Re-read every affected live resource and dependency through the assigned MCP server.
+3. Verify plugin/data/design-system ownership where relevant.
+4. Compare cached documentation with live state.
+5. Reuse existing resources and patterns where appropriate.
+6. Inspect relevant frontend references for visual work.
+7. Use preview, dry-run, or planning abilities where available for non-trivial work.
+8. Confirm scope before destructive or global-impact operations.
+
+After writing:
+
+1. confirm authoritative mutation readback or re-read persisted state;
+2. verify that unrelated resources did not change;
+3. apply the relevant Bricks quality gate;
+4. visually verify frontend/responsive behavior where appropriate;
+5. update only local documentation made stale by the change.
+
+## Documentation lifecycle
+
+Keep the bootstrap audit as a durable reference; do not regenerate it for routine tasks.
+
+Use targeted re-audits when a material change affects:
+
+- plugin/integration architecture
+- data model
+- Theme Styles
+- global classes/variables/tokens
+- design-system provider/framework
+- breakpoints
+- templates/routing
+- components
+- queries
+- WooCommerce architecture
+- reusable visual patterns
+
+Major audit/reference documents should include, where practical:
+
+- Last audited
+- Last live-verified
+- Resource ID / post ID where applicable
+- Verification status
+
+Record only supported dates, IDs, and status.
+
+## Bootstrap-audit mode
+
+During the initial full-site bootstrap audit:
+
+- the remote WordPress / Bricks site is READ-ONLY;
+- local project files may be created and updated;
+- browser/frontend inspection is allowed;
+- no WordPress, Bricks, plugin, theme, WooCommerce, media, or server resource may be modified;
+- no PHP may be executed;
+- the audit may update this file's PROJECT PROFILE and add verified site-specific routing/reference guidance;
+- preserve these general safety and workflow rules unless the user explicitly changes them.
+
+Do not declare the bootstrap audit COMPLETE while relevant discovered resources remain unprocessed without a documented reason.
+
+## Safety
+
+Unless explicitly authorized for the specific task:
+
+- do not execute PHP;
+- do not modify plugin, theme, child-theme, or server source files;
+- do not install, delete, update, activate, or deactivate plugins;
+- do not alter licenses;
+- do not delete pages, posts, templates, global classes, variables, components, CPTs, taxonomies, field groups, relationships, or media;
+- do not modify WooCommerce operational data/configuration;
+- do not change global templates, headers, footers, or site-wide settings outside the requested scope;
+- do not make unrelated changes.
+
+Prefer reversible, scoped changes.
+
+## Communication
+
+- Clearly distinguish read-only analysis, proposed changes, committed changes, cached facts, verified live facts, inference, recommendations, and unresolved uncertainty.
+- Do not present inferred design conventions as established rules without evidence.
+- If ambiguity could materially affect architecture, global design rules, data structures, permissions, or destructive operations, ask before writing.
+- For ordinary scoped work, proceed with the safest interpretation supported by verified project state.
