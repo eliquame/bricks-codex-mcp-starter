@@ -64,10 +64,11 @@ A one-prompt bootstrap:
 7. **nem kéri, hogy credentialt másolj a chatbe**;
 8. ellenőrzi az MCP kapcsolatot read-only módon;
 9. telepíti vagy ellenőrzi a Bricks skills csomagot;
-10. azonosítja az adott site-ot és a hozzá tartozó MCP servert;
-11. lefuttatja a teljes read-only bootstrap auditot;
-12. feltölti a projekt dokumentációját valós site-adatokkal;
-13. finomítja az `AGENTS.md` project profile-ját.
+10. ha új chat vagy restart kell, elmenti a bootstrap állapotát a projektbe, hogy onnan folytatható legyen;
+11. azonosítja az adott site-ot és a hozzá tartozó MCP servert;
+12. lefuttatja a teljes read-only bootstrap auditot;
+13. feltölti a projekt dokumentációját valós site-adatokkal;
+14. finomítja az `AGENTS.md` project profile-ját.
 
 ## Amit továbbra is neked kell megtenned
 
@@ -241,7 +242,7 @@ project-starter/AGENTS.md
 prompts/00-full-site-bootstrap-audit.md
     full read-only site discovery and documentation
 
-prompts/02-design-system-change-workflow.md
+prompts/10-design-system-change-workflow.md
     controlled global design-system changes
 
 prompts/90-agents-maintenance-and-sync.md
@@ -309,6 +310,12 @@ Codex may pause for:
 - GitHub authorization;
 - Codex restart/new chat;
 - missing WordPress/Bricks permissions.
+
+Ha új chat kell, a folyamat előtte elmenti az állapotot a `docs/bricks/00-bootstrap-status.md` fájlba. Az új chatben elég ezt írni:
+
+```text
+Continue the Bricks/Codex bootstrap from docs/bricks/00-bootstrap-status.md
+```
 
 ## Security model
 
