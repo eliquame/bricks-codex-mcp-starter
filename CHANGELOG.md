@@ -1,51 +1,61 @@
 # Changelog
 
-All notable changes to this starter workflow should be documented here.
+All notable user-meaningful changes to this starter workflow are documented here.
+
+This project follows [Semantic Versioning](https://semver.org/) and a Keep a Changelog-style structure.
 
 ## [Unreleased]
 
+New work goes here until the next release.
+
+## [0.1.0] - 2026-09-24
+
+First versioned development baseline for the Bricks + Codex MCP starter.
+
 ### Added
-- Bricks-native authoring standard covering semantic element choice, native controls, CSS ID hygiene, global class/BEM strategy, variable/token reuse, media/icon reuse, and fluid responsive authoring.
-- Read-only native-authoring review workflow for pages/templates/components.
-- Advanced Themer bundled-ACF provenance heuristic for cases where ACF runtime is available but no standalone ACF plugin appears in the standard plugin list.
-- Existing-project upgrade/reconciliation workflow validated by the first real-site migration test.
-- `STARTER-MANIFEST.json` for package/revision identity when starter files are distributed as ZIP without Git metadata.
-- Task workflow prompt suite for greenfield design-system seeding, new/existing pages, templates, plugin/data architecture, WooCommerce, and targeted re-audits.
-- Prompt catalog with lifecycle-based numbering convention.
-- One-prompt `START-HERE.md` orchestration: Codex initializes AGENTS/docs, guides MCP setup securely, verifies skills, and runs the bootstrap audit itself.
-- Site maturity handling for ESTABLISHED, PARTIAL / IN PROGRESS, and GREENFIELD projects.
-- Design-system authority/provenance handling for Bricks-native, external framework, hybrid, custom-code-driven, and undefined systems.
-- External CSS/design-framework detection and ownership rules, including provider-owned classes/variables/tokens.
-- Controlled global design-system change workflow and lifecycle documentation.
-- Initial repository structure.
-- Bilingual README (Hungarian first, English second).
-- Generic full-site Bricks + Codex MCP bootstrap audit prompt.
-- Canonical `project-starter/AGENTS.md` loaded before the first site-specific Codex task.
-- AGENTS maintenance/synchronization prompt for later project lifecycle changes.
+- One-prompt `START-HERE.md` orchestration for project initialization, MCP setup guidance, Bricks skills verification, and bootstrap audit execution.
+- Persistent bootstrap resume state via `docs/bricks/00-bootstrap-status.md`.
+- Canonical `project-starter/AGENTS.md` with site isolation, source-of-truth, permission-aware, safety, documentation, and workflow rules.
+- Full read-only site bootstrap audit covering Bricks architecture, plugin/data architecture, design systems, templates, pages, WooCommerce, and frontend visual references.
+- Site maturity model: ESTABLISHED / PARTIAL / GREENFIELD.
+- Design-system authority/provenance model for Bricks-native, external framework, hybrid, custom-code-driven, and undefined systems.
+- External CSS/design-framework ownership handling.
+- Existing-project upgrade/reconciliation workflow.
+- Greenfield design-system seed workflow.
+- New page, existing page, template, plugin/data architecture, WooCommerce, targeted re-audit, and AGENTS synchronization workflows.
+- Bricks-native authoring standard and read-only native-authoring quality review.
+- Advanced Themer bundled-ACF provenance heuristic.
+- ZIP/package lineage support through `STARTER-MANIFEST.json`.
 - Audit-progress and documentation-structure templates.
-- Setup, workflow, and security documentation.
+- Bilingual README with secure setup guidance and Bricks Skills screenshot.
+- Release/versioning infrastructure: `VERSION`, release policy, metadata validation, changelog note extraction, and GitHub Actions release workflow.
 
 ### Changed
-- New-page, existing-page, and template workflows now require a native-authoring preflight and post-write review.
-- AGENTS skill routing now explicitly uses bricks-plan-from-brief, bricks-element-schemas, bricks-naming-conventions, bricks-media-assets, and bricks-custom-code only when appropriate.
-- Plugin/provider detection now distinguishes runtime evidence from standard plugin-list visibility and records unresolved loader provenance instead of assuming absence.
-- WooCommerce absence/status is now evidence-aware when plugin inventory is incomplete.
-- Design-system ownership can record confidence (VERIFIED / STRONG EVIDENCE / TENTATIVE / UNKNOWN).
-- Bootstrap completion reporting now surfaces meaningful snapshot deltas and unresolved provenance/ownership gaps.
-- Default AGENTS policy now automatically routes natural-language tasks to the appropriate specialist workflow; users do not need to know prompt filenames.
-- Repository audit aligned every setup document with the one-prompt automation model; removed remaining manual starter-copy instructions.
-- `START-HERE.md` now persists bootstrap state across new-chat/restart boundaries via `docs/bricks/00-bootstrap-status.md`.
-- Renumbered the global design-system workflow to `prompts/10-design-system-change-workflow.md` for clearer lifecycle grouping.
-- Audit-progress and documentation-structure templates now match the bootstrap maturity/ownership/status model.
-- Removed redundant `project-starter/README.md`; the internal starter source now contains only files Codex actually consumes.
-- README simplified around a single copy-to-Codex bootstrap prompt; users no longer manually create starter project files.
-- `project-starter/` is now an internal source consumed by Codex rather than a manual user copy step.
-- Removed the superseded `prompts/COPY-TO-CODEX-SETUP-WIZARD.md`; root `START-HERE.md` is canonical.
-- Bootstrap now refines an existing canonical AGENTS policy instead of generating project rules from scratch.
-- Real-world bootstrap test patterns were incorporated into the default AGENTS workflow and documentation structure.
-- Removed the duplicate `templates/AGENTS.template.md` source to avoid ambiguity; `project-starter/AGENTS.md` is canonical.
-- Renamed the old AGENTS refresh concept to the lifecycle-oriented `90-agents-maintenance-and-sync.md`.
+- Default AGENTS policy automatically routes natural-language tasks to specialist workflows.
+- New-page, existing-page, and template workflows now require Bricks-native preflight and post-write authoring review.
+- Skill routing explicitly uses `bricks-plan-from-brief`, `bricks-element-schemas`, `bricks-naming-conventions`, `bricks-media-assets`, and `bricks-custom-code` only when appropriate.
+- Plugin/provider detection distinguishes runtime evidence from standard plugin-list visibility and records unresolved loader provenance.
+- WooCommerce absence/status is evidence-aware when plugin inventory is incomplete.
+- Design-system ownership can carry confidence: VERIFIED / STRONG EVIDENCE / TENTATIVE / UNKNOWN.
+- Bootstrap completion reports expose meaningful snapshot deltas and unresolved provenance/ownership gaps.
+- Setup/documentation flow was simplified around a single copy-to-Codex bootstrap prompt.
+- `project-starter/` became an internal source consumed by Codex rather than a manual copy step.
+- Global design-system workflow was renumbered into the lifecycle-based prompt catalog.
 
-### Notes
-- This repository is intentionally site-agnostic.
-- Runtime credentials and site-specific audit output must not be committed here.
+### Fixed
+- Removed duplicate/conflicting AGENTS template sources.
+- Removed the superseded AGENTS refresh prompt and replaced it with lifecycle-oriented maintenance/synchronization.
+- Removed the superseded standalone setup wizard in favor of root `START-HERE.md`.
+- Removed stale manual starter-copy instructions from setup documentation.
+- Added restart/new-chat resume handling so MCP/skills reloads do not lose bootstrap progress.
+- Aligned WooCommerce documentation behavior with mandatory status detection.
+- Aligned audit/documentation templates with the actual bootstrap maturity, ownership, and evidence model.
+
+### Security
+- Added secret-safe `.gitignore` rules for Codex config, credentials, keys, and local secret files.
+- Standardized the secure connection path around Bricks **Paste config** so Application Passwords do not need to be pasted into chat.
+- Added least-privilege guidance and explicit no-PHP/no-destructive-write bootstrap rules.
+- Added credential redaction and local-only handling requirements for `config.toml`.
+
+[Unreleased]: https://github.com/eliquame/bricks-codex-mcp-starter/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/eliquame/bricks-codex-mcp-starter/releases/tag/v0.1.0
