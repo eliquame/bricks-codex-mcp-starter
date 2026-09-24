@@ -21,6 +21,7 @@ All notable changes to this starter workflow should be documented here.
 - Setup, workflow, and security documentation.
 
 ### Changed
+- Default AGENTS policy now automatically routes natural-language tasks to the appropriate specialist workflow; users do not need to know prompt filenames.
 - Repository audit aligned every setup document with the one-prompt automation model; removed remaining manual starter-copy instructions.
 - `START-HERE.md` now persists bootstrap state across new-chat/restart boundaries via `docs/bricks/00-bootstrap-status.md`.
 - Renumbered the global design-system workflow to `prompts/10-design-system-change-workflow.md` for clearer lifecycle grouping.
