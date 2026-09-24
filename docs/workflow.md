@@ -152,6 +152,7 @@ After bootstrap, prefer the reusable workflow prompt that matches the task:
 - new page: `prompts/20-new-page-build-workflow.md`
 - existing page edit: `prompts/21-existing-page-edit-workflow.md`
 - template change: `prompts/22-template-change-workflow.md`
+- native-authoring quality review: `prompts/23-native-authoring-review.md`
 - plugin/data architecture change: `prompts/30-plugin-data-architecture-change-workflow.md`
 - WooCommerce: `prompts/31-woocommerce-workflow.md`
 - targeted re-audit: `prompts/80-targeted-reaudit.md`
