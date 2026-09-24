@@ -5,6 +5,8 @@ All notable changes to this starter workflow should be documented here.
 ## [Unreleased]
 
 ### Added
+- Existing-project upgrade/reconciliation workflow validated by the first real-site migration test.
+- `STARTER-MANIFEST.json` for package/revision identity when starter files are distributed as ZIP without Git metadata.
 - Task workflow prompt suite for greenfield design-system seeding, new/existing pages, templates, plugin/data architecture, WooCommerce, and targeted re-audits.
 - Prompt catalog with lifecycle-based numbering convention.
 - One-prompt `START-HERE.md` orchestration: Codex initializes AGENTS/docs, guides MCP setup securely, verifies skills, and runs the bootstrap audit itself.
@@ -21,6 +23,10 @@ All notable changes to this starter workflow should be documented here.
 - Setup, workflow, and security documentation.
 
 ### Changed
+- Plugin/provider detection now distinguishes runtime evidence from standard plugin-list visibility and records unresolved loader provenance instead of assuming absence.
+- WooCommerce absence/status is now evidence-aware when plugin inventory is incomplete.
+- Design-system ownership can record confidence (VERIFIED / STRONG EVIDENCE / TENTATIVE / UNKNOWN).
+- Bootstrap completion reporting now surfaces meaningful snapshot deltas and unresolved provenance/ownership gaps.
 - Default AGENTS policy now automatically routes natural-language tasks to the appropriate specialist workflow; users do not need to know prompt filenames.
 - Repository audit aligned every setup document with the one-prompt automation model; removed remaining manual starter-copy instructions.
 - `START-HERE.md` now persists bootstrap state across new-chat/restart boundaries via `docs/bricks/00-bootstrap-status.md`.
