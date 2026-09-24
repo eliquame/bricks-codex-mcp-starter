@@ -87,6 +87,7 @@ DOCUMENTATION STRUCTURE
 Use the starter repository's `templates/documentation-structure.md` as the current structural reference, and use the following structure where appropriate:
 
 docs/bricks/
+    00-bootstrap-status.md
     00-audit-progress.md
     00-site-overview.md
     00-site-state.md
@@ -1293,8 +1294,7 @@ Finally refine the project-root:
 
 AGENTS.md
 
-This project should already contain the canonical starter AGENTS.md copied from
-`project-starter/AGENTS.md` before the first Codex thread begins.
+The automated `START-HERE.md` flow should already have initialized the project-root AGENTS.md from the starter repository's `project-starter/AGENTS.md` before this full audit begins.
 
 Read the existing file first.
 
@@ -1307,9 +1307,7 @@ Do NOT replace it with a shorter ad-hoc file.
 Populate/refine its PROJECT PROFILE and add only useful site-specific routing/reference
 guidance derived from this verified audit.
 
-If project-root AGENTS.md is missing, do not silently invent a different policy.
-Report that project initialization was skipped and request that the canonical starter
-AGENTS.md be added before normal write-enabled work.
+If project-root AGENTS.md is missing, treat that as incomplete bootstrap initialization. If the starter repository source is still available, create AGENTS.md from `project-starter/AGENTS.md` yourself, then continue. If the starter source is unavailable, stop and report the missing initialization rather than inventing a different policy.
 
 Keep site-specific additions concise and operational.
 
