@@ -1,0 +1,80 @@
+name: Publish Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "SemVer version without v prefix (for example 0.1.0)"
+        required: true
+        type: string
+      prerelease:
+        description: "Mark GitHub Release as pre-release"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate release metadata
+        run: python scripts/validate_release_metadata.py
+
+      - name: Validate requested version
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+        run: |
+          FILE_VERSION="$(tr -d '\r\n' < VERSION)"
+          if [ "$REQUESTED_VERSION" != "$FILE_VERSION" ]; then
+            echo "Requested version $REQUESTED_VERSION does not match VERSION $FILE_VERSION" >&2
+            exit 1
+          fi
+
+      - name: Extract release notes
+        env:
+          VERSION: ${{ inputs.version }}
+        run: python scripts/extract-release-notes.py "$VERSION" > release-notes.md
+
+      - name: Refuse existing tag
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          git fetch --tags --force
+          if git rev-parse "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "Tag v$VERSION already exists" >&2
+            exit 1
+          fi
+
+      - name: Create and push annotated tag
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" -m "Release v$VERSION"
+          git push origin "v$VERSION"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          args=(
+            "v$VERSION"
+            --verify-tag
+            --title "v$VERSION"
+            --notes-file release-notes.md
+          )
+          if [ "$PRERELEASE" = "true" ]; then
+            args+=(--prerelease)
+          fi
+          gh release create "${args[@]}"
