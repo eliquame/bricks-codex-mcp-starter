@@ -104,6 +104,8 @@ docs/bricks/
     08-breakpoints.md
 
     09-templates.md
+    pages-index.md
+    site-settings.md
     10-components.md
     11-dynamic-data.md
     12-queries.md
@@ -133,6 +135,12 @@ docs/bricks/
         data-architecture.json
         design-context.json
         design-system-authority.json
+        design-system.json
+        site-settings.json
+        template-architecture.json
+        page-architecture.json
+        dynamic-dependencies.json
+        audit-findings.json
         templates.json
         other useful machine-readable snapshots
 
@@ -226,10 +234,12 @@ Inspect and inventory where available:
 - important post types rendered through Bricks
 - relevant plugin-generated resources
 
-Create:
+Create/update:
 
 docs/bricks/site-inventory.md
+docs/bricks/site-settings.md
 docs/bricks/snapshots/site-inventory.json
+docs/bricks/snapshots/site-settings.json
 docs/bricks/00-site-overview.md
 
 Include identifiers such as:
@@ -818,7 +828,11 @@ For every relevant page record:
 - recurring patterns
 - important exceptions
 
-Create:
+Create/update:
+
+docs/bricks/pages-index.md
+
+Create one detail file per relevant page:
 
 docs/bricks/pages/<slug>.md
 
@@ -1271,17 +1285,44 @@ Classify:
 PHASE 14 — AGENTS.md
 ==================================================
 
-Finally create or update the project-root:
+Finally refine the project-root:
 
 AGENTS.md
 
+This project should already contain the canonical starter AGENTS.md copied from
+`project-starter/AGENTS.md` before the first Codex thread begins.
+
 Read the existing file first.
 
-Preserve useful existing instructions.
+Preserve its general safety, source-of-truth, permission-aware, plugin-aware,
+visual-verification, design-system ownership, documentation-lifecycle, skill-routing,
+and write-verification rules.
 
-Keep it concise and operational.
+Do NOT replace it with a shorter ad-hoc file.
 
-It must establish:
+Populate/refine its PROJECT PROFILE and add only useful site-specific routing/reference
+guidance derived from this verified audit.
+
+If project-root AGENTS.md is missing, do not silently invent a different policy.
+Report that project initialization was skipped and request that the canonical starter
+AGENTS.md be added before normal write-enabled work.
+
+Keep site-specific additions concise and operational.
+
+It must record verified project-profile values where available:
+
+- Site name
+- Site URL
+- Allowed MCP server
+- Bootstrap status
+- SITE_MATURITY
+- DESIGN_SYSTEM_STATE
+- DESIGN_SYSTEM_AUTHORITY
+- WooCommerce status
+- Primary data/content providers
+- Primary CSS/design-system provider
+
+It must also preserve or strengthen:
 
 --------------------------------------------------
 SITE IDENTITY
