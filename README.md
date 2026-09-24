@@ -179,7 +179,7 @@ A Codex böngészőben is feltérképezi a valódi publikus oldalakat, így nem 
 
 Nem talál ki nem létező vizuális szabályokat.
 
-Ha még nincs kialakult design system, ezt külön jelzi, és a későbbi design-system creation/seed feladatból indulunk.
+Ha még nincs kialakult design system, ezt külön jelzi. Ilyenkor a következő ajánlott workflow a `prompts/11-greenfield-design-system-seed.md`.
 
 ## Design system ownership
 
@@ -251,8 +251,32 @@ prompts/00-full-site-bootstrap-audit.md
 prompts/10-design-system-change-workflow.md
     controlled global design-system changes
 
+prompts/11-greenfield-design-system-seed.md
+    first design-system foundation for GREENFIELD projects
+
+prompts/20-new-page-build-workflow.md
+    new Bricks page workflow
+
+prompts/21-existing-page-edit-workflow.md
+    scoped existing-page edits
+
+prompts/22-template-change-workflow.md
+    template/conditions changes with multi-context verification
+
+prompts/30-plugin-data-architecture-change-workflow.md
+    CPT/field/query/relationship/provider architecture changes
+
+prompts/31-woocommerce-workflow.md
+    WooCommerce + Bricks work
+
+prompts/80-targeted-reaudit.md
+    scoped read-only re-audit after material changes
+
 prompts/90-agents-maintenance-and-sync.md
     later AGENTS synchronization after material changes
+
+prompts/README.md
+    prompt catalog and numbering convention
 
 templates/documentation-structure.md
     reference for the generated knowledge base
@@ -345,7 +369,7 @@ The bootstrap classifies the project as:
 
 Established sites receive browser/frontend visual auditing.
 
-Greenfield sites do not get invented visual rules.
+Greenfield sites do not get invented visual rules. When the design system is undefined, use `prompts/11-greenfield-design-system-seed.md` before broad page design.
 
 The bootstrap also determines design-system authority:
 
