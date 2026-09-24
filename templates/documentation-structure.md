@@ -12,7 +12,7 @@ site-project/
         └── README.md
 ```
 
-The bootstrap audit then expands `docs/bricks/` according to the resources that actually exist on the target site.
+The automated START-HERE flow first creates `00-bootstrap-status.md` to persist setup/resume state. The full bootstrap audit then creates `00-audit-progress.md` and expands `docs/bricks/` according to the resources that actually exist on the target site.
 
 Recommended generated structure:
 
@@ -21,6 +21,7 @@ site-project/
 ├── AGENTS.md
 └── docs/
     └── bricks/
+        ├── 00-bootstrap-status.md
         ├── 00-audit-progress.md
         ├── 00-site-overview.md
         ├── 00-site-state.md
@@ -83,6 +84,13 @@ Examples:
 - `14-woocommerce.md` is required only when WooCommerce is installed/active; otherwise status can be recorded without inventing content.
 - deep frontend visual references are required for ESTABLISHED sites, limited for PARTIAL sites, and may be NOT APPLICABLE / INSUFFICIENT EVIDENCE on GREENFIELD sites.
 - empty files should not be created merely to satisfy a template.
+
+## Setup status vs. audit progress
+
+- `00-bootstrap-status.md` tracks orchestration: MCP setup, skills loading, project initialization, restart/resume state.
+- `00-audit-progress.md` tracks actual site-discovery coverage.
+
+They are intentionally separate.
 
 ## Why both Markdown and JSON?
 
