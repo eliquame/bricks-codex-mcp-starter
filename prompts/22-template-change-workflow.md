@@ -16,6 +16,13 @@ BEFORE WRITE
 5. Identify global classes/variables/components/queries/plugin dependencies used by the template.
 6. Inspect representative live frontend URLs before changing visual/layout behavior.
 7. Determine blast radius.
+8. Run a Bricks-native authoring preflight for the changed structure:
+   - semantic/native element choice;
+   - native controls before custom CSS;
+   - class/variable reuse;
+   - CSS ID hygiene;
+   - fluid/intrinsic responsive strategy;
+   - existing media/icon reuse.
 
 Before writing, report:
 - template ID/type;
@@ -32,6 +39,7 @@ WRITE
 - Reuse established design-system resources.
 - Do not alter unrelated templates.
 - Use preview/planning where available.
+- Do not introduce custom CSS or custom IDs when native Bricks controls/classes/variables can express the same result.
 
 VERIFY
 
@@ -41,7 +49,8 @@ After writing:
 3. verify relevant viewport widths;
 4. verify query/dynamic-data contexts;
 5. verify logged-in/logged-out or state-dependent contexts when relevant and safely testable;
-6. run the relevant quality gate.
+6. run the relevant quality gate;
+7. run a native-authoring review on the changed template scope.
 
 DOCUMENT
 
@@ -57,5 +66,7 @@ Report:
 - routing/conditions changed or preserved;
 - representative contexts checked;
 - regressions found/fixed;
-- documentation updated.
+- documentation updated;
+- native-authoring review result;
+- any remaining custom CSS/code and justification.
 ```
