@@ -1,0 +1,37 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.secret
+*.secrets
+secrets/
+credentials/
+credentials.*
+*.pem
+*.key
+
+# Codex local/global configuration
+.codex/
+config.toml
+
+# WordPress / MCP credentials
+*application-password*
+*mcp-credentials*
+*wp-credentials*
+
+# Local project artifacts
+*.log
+*.tmp
+*.temp
+.cache/
+tmp/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Optional local visual captures that may contain private data
+private-captures/
