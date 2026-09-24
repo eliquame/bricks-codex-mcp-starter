@@ -5,6 +5,8 @@ All notable changes to this starter workflow should be documented here.
 ## [Unreleased]
 
 ### Added
+- Task workflow prompt suite for greenfield design-system seeding, new/existing pages, templates, plugin/data architecture, WooCommerce, and targeted re-audits.
+- Prompt catalog with lifecycle-based numbering convention.
 - One-prompt `START-HERE.md` orchestration: Codex initializes AGENTS/docs, guides MCP setup securely, verifies skills, and runs the bootstrap audit itself.
 - Site maturity handling for ESTABLISHED, PARTIAL / IN PROGRESS, and GREENFIELD projects.
 - Design-system authority/provenance handling for Bricks-native, external framework, hybrid, custom-code-driven, and undefined systems.
