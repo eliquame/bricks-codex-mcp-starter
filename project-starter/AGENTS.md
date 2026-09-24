@@ -48,6 +48,85 @@ If local documentation disagrees with accessible live state, follow the relevant
 - Prefer Bricks-native controls and structures when the site is Bricks-native, but respect external framework/provider ownership where present.
 - Prefer the smallest scoped change that satisfies the request.
 
+## Bricks-native authoring standard
+
+For page, template, and component authoring, use this priority order:
+
+1. correct native Bricks element;
+2. native Bricks control;
+3. existing global class / variable / component;
+4. new reusable global class / variable only when justified;
+5. element-local Bricks control for a truly one-off style;
+6. custom selector / custom CSS only when native controls cannot cleanly express the requirement;
+7. custom JS/PHP only when Bricks-native behavior is insufficient and the required code path is explicitly authorized.
+
+### Element choice
+
+- Interpret source content semantically; do not map a Word/Google document literally to generic containers/text nodes.
+- Do not build a real list as a Div containing many Basic Text elements when List or Icon List fits the content.
+- Before using generic Div/Block + repeated text for a structured pattern, check the runtime element catalog and relevant schema.
+- Prefer purpose-built Bricks elements for headings, buttons, images, SVGs/icons, lists, accordions, tabs, forms, navigation, files, query-driven content, and other supported patterns.
+- Use a Component when genuine structural reuse exists; do not create speculative components for one-off structures.
+
+### Native controls before custom CSS
+
+- Before writing custom CSS, fetch/check the target element's native controls.
+- Use native controls for object-fit/object-position, aspect ratio, dimensions, spacing, grid/flex, typography, backgrounds, borders, radii, shadows, transforms, filters, responsive values, and other supported properties.
+- Example: Image object-fit must use the Image element's Object fit control when that control satisfies the requirement; do not write custom CSS for it.
+- If custom CSS remains necessary, record why the native controls/classes/variables were insufficient.
+
+### CSS ID discipline
+
+- Do not use the CSS ID field as a class/name field.
+- Leave custom CSS ID empty unless a genuinely unique HTML id is required for an anchor, ARIA relation, JS/third-party integration, or another explicit unique target.
+- Human-readable reusable names belong in global classes.
+- Human-readable builder organization belongs in element labels/names where supported.
+- BEM-like names such as service-card__title or hero-wrapper must not be placed in CSS ID merely for styling.
+
+### Global classes and naming
+
+- Reuse existing global classes before creating new ones.
+- Follow the site's existing naming convention and external framework ownership.
+- If no conflicting convention exists, prefer BEM for reusable component classes:
+  - block
+  - block__element
+  - block--modifier
+- Do not force BEM onto utility classes or provider-owned framework classes.
+- Shared/repeated style → global class.
+- Unique exception → element-local Bricks controls.
+
+### Global variables and fluid layout
+
+- Reuse existing variables/tokens before hardcoding values.
+- Create a new variable only when the value is a reusable design/system concept and no suitable variable exists.
+- Do not create a variable for every one-off number.
+- Before adding chains of breakpoint overrides, consider a more robust native/fluid solution using clamp(), min(), max(), minmax(), repeat(), auto-fit/auto-fill, fr units, intrinsic sizing, wrapping, and existing fluid scales.
+- Breakpoint overrides are appropriate when the layout mode genuinely changes, not merely to patch brittle magic values.
+- When a Bricks spacing/typography scale already exists, extend/use that system instead of inventing a parallel token family.
+
+### Media and icons
+
+- Before uploading/recreating media or icons, inspect existing WordPress media, Bricks custom icon sets, and the site's established icon language.
+- Reuse an existing SVG/icon/media asset when it is appropriate.
+- For lists/features, consider native list/icon controls and existing site icons instead of manually assembling repeated text/icon markup.
+
+### Required authoring review
+
+For every new page, substantial page edit, or template change, perform a native-authoring review before declaring the task complete.
+
+Check:
+- missed native elements;
+- custom CSS that duplicates native controls;
+- class-like custom CSS IDs;
+- reusable styles trapped locally;
+- duplicate/near-duplicate classes;
+- repeated hardcoded values that should reuse tokens;
+- brittle breakpoint patch chains;
+- missed media/icon reuse;
+- unjustified custom code.
+
+When the starter repository is accessible, use prompts/23-native-authoring-review.md as the canonical detailed review workflow.
+
 ## Site maturity
 
 Classify the site as:
@@ -123,6 +202,24 @@ Potential systems include ACF / ACF Pro, JetEngine, ACPT / ACPT Pro, Meta Box, P
 
 Do not recreate functionality already provided by an active system unless the user explicitly requests rearchitecture or migration.
 
+### Advanced Themer / bundled ACF provenance heuristic
+
+Advanced Themer can bundle ACF Pro for its own Theme Settings functionality.
+
+Therefore, if:
+- Advanced Themer is active;
+- ACF runtime APIs/data sources are demonstrably working;
+- standalone ACF/ACF Pro is absent from the normal plugin list;
+
+do not conclude that ACF is absent.
+
+Instead investigate provenance:
+- if runtime/file-path evidence points into Advanced Themer, mark ACF loader provenance as VERIFIED: ADVANCED THEMER BUNDLED;
+- if only the combination above is known, mark it as STRONG EVIDENCE / LIKELY ADVANCED THEMER BUNDLED;
+- otherwise keep loader provenance UNKNOWN.
+
+This is a heuristic, not a universal assumption. ACF may also be loaded by another plugin, MU-plugin, Composer/custom code, theme/child-theme, or standalone installation.
+
 ## WooCommerce
 
 Always determine WooCommerce evidence/status. Prefer:
@@ -154,6 +251,7 @@ When the starter repository is accessible, use the matching canonical workflow a
 - Bricks template/header/footer/archive/single change → `prompts/22-template-change-workflow.md`
 - CPT/field/taxonomy/relationship/query/plugin-owned data architecture change → `prompts/30-plugin-data-architecture-change-workflow.md`
 - WooCommerce + Bricks work → `prompts/31-woocommerce-workflow.md`
+- Bricks-native authoring quality review → `prompts/23-native-authoring-review.md`
 - limited read-only re-audit → `prompts/80-targeted-reaudit.md`
 - reconcile an older bootstrapped project with a newer starter → `prompts/81-existing-project-upgrade.md`
 - AGENTS/project-profile synchronization → `prompts/90-agents-maintenance-and-sync.md`
@@ -193,6 +291,11 @@ When modifying an existing resource:
 ## Skill routing
 
 - Use `bricks-start-here` for broad or unclear Bricks tasks.
+- Use `bricks-plan-from-brief` for broad page/site builds from a document, content brief, or ambiguous design request before writing.
+- Use `bricks-element-schemas` to list/fetch runtime element/control schemas before choosing generic structures or writing unfamiliar/complex controls.
+- Use `bricks-naming-conventions` before creating new shared class/variable/component names.
+- Use `bricks-media-assets` before uploading/recreating images, SVGs, icon sets, or other shared media.
+- Use `bricks-custom-code` only after native Bricks controls/selectors/classes/variables are insufficient and custom code remains justified.
 - For a known focused target, prefer the narrow live MCP abilities that match the task.
 - Use `bricks-agent-repository` only when focused abilities cannot express a complex existing-site change and the host advertises that route.
 - Use `bricks-design-systems` for Theme Styles, global classes, variables, palettes, and related design-system work.
