@@ -10,6 +10,7 @@ These prompts are reusable workflow entry points. They are not site-specific.
 | `20-new-page-build-workflow.md` | Builds a new Bricks page using the bootstrapped site architecture and visual references. |
 | `21-existing-page-edit-workflow.md` | Makes a scoped change to an existing Bricks page with live readback and frontend verification. |
 | `22-template-change-workflow.md` | Safely changes Bricks templates/conditions with multi-context verification. |
+| `23-native-authoring-review.md` | Read-only review for missed native elements/controls, ID misuse, class/variable reuse, custom CSS, media reuse, and fluid responsiveness. |
 | `30-plugin-data-architecture-change-workflow.md` | Changes CPTs, fields, taxonomies, relationships, queries, or other provider-owned data architecture. |
 | `31-woocommerce-workflow.md` | WooCommerce + Bricks layout/template/data workflow with commerce-specific safety rules. |
 | `80-targeted-reaudit.md` | Read-only re-audit of a limited area after material project changes. |
@@ -20,7 +21,7 @@ These prompts are reusable workflow entry points. They are not site-specific.
 
 - `00` — initial bootstrap/discovery
 - `10–19` — design-system lifecycle
-- `20–29` — Bricks page/template work
+- `20–29` — Bricks page/template authoring and native-authoring quality
 - `30–39` — plugin/data/commerce architecture
 - `80–89` — re-audit/verification
 - `90–99` — project-policy maintenance
