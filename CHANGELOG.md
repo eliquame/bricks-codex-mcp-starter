@@ -19,6 +19,11 @@ All notable changes to this starter workflow should be documented here.
 - Setup, workflow, and security documentation.
 
 ### Changed
+- Repository audit aligned every setup document with the one-prompt automation model; removed remaining manual starter-copy instructions.
+- `START-HERE.md` now persists bootstrap state across new-chat/restart boundaries via `docs/bricks/00-bootstrap-status.md`.
+- Renumbered the global design-system workflow to `prompts/10-design-system-change-workflow.md` for clearer lifecycle grouping.
+- Audit-progress and documentation-structure templates now match the bootstrap maturity/ownership/status model.
+- Removed redundant `project-starter/README.md`; the internal starter source now contains only files Codex actually consumes.
 - README simplified around a single copy-to-Codex bootstrap prompt; users no longer manually create starter project files.
 - `project-starter/` is now an internal source consumed by Codex rather than a manual user copy step.
 - Removed the superseded `prompts/COPY-TO-CODEX-SETUP-WIZARD.md`; root `START-HERE.md` is canonical.
