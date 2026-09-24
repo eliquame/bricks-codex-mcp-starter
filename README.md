@@ -203,6 +203,36 @@ A Codexnek meg kell értenie, hogy egy class vagy variable:
 
 Így nem hoz létre felesleges Bricks duplikátumokat egy külső framework mellé.
 
+## Bricks-native építési szabályok
+
+A starter most már nem csak azt szabályozza, hogy **mit** módosítson a Codex, hanem azt is, hogy **hogyan építsen Bricksben**.
+
+Alapelv:
+
+1. megfelelő natív Bricks element;
+2. natív Bricks control;
+3. meglévő global class / variable / component;
+4. új reusable class / variable csak indokolt esetben;
+5. egyedi element-local Bricks beállítás;
+6. custom CSS csak akkor, ha a natív Bricks lehetőségek nem tudják tisztán megoldani.
+
+Példák:
+
+- valódi felsorolás → List / Icon List, ne sok Basic Text egy Divben;
+- Image object-fit → az Image natív Object fit controlja, ne custom CSS;
+- reusable styling → global class;
+- egyszeri egyedi styling → element-local Bricks control;
+- CSS ID → csak valódi egyedi HTML ID célra; ne classnév helyettesítésére;
+- repeated/design token value → meglévő vagy indokolt új global variable;
+- responsive layout → előbb fluid/intrinsic megoldás, utána breakpoint override.
+
+Ha nincs kialakult site-specifikus naming convention, reusable component classokhoz BEM jó alapértelmezés; utility vagy framework-owned classokra nem kell erőltetni.
+
+Részletes szabályok:
+
+- [Bricks-Native Authoring Standard](docs/bricks-native-authoring-standard.md)
+- [Native Authoring Review](prompts/23-native-authoring-review.md)
+
 ## WooCommerce
 
 A WooCommerce státuszát minden bootstrap audit ellenőrzi.
@@ -283,6 +313,9 @@ prompts/21-existing-page-edit-workflow.md
 
 prompts/22-template-change-workflow.md
     template/conditions changes with multi-context verification
+
+prompts/23-native-authoring-review.md
+    native element/control/class/variable/CSS/ID quality review
 
 prompts/30-plugin-data-architecture-change-workflow.md
     CPT/field/query/relationship/provider architecture changes
@@ -421,6 +454,36 @@ After bootstrap, you do **not** need to memorize prompt filenames.
 Ask Codex for the task naturally. The project `AGENTS.md` routes the task to the appropriate workflow (new page, existing page, template, design system, plugin/data architecture, WooCommerce, or re-audit) when the intent is clear.
 
 The files under `prompts/` are the canonical detailed workflows, not a menu the user must manually operate.
+
+## Bricks-native authoring rules
+
+The starter now governs not only **what** Codex changes, but also **how** it authors inside Bricks.
+
+Priority:
+
+1. correct native Bricks element;
+2. native Bricks control;
+3. existing global class / variable / component;
+4. new reusable class / variable only when justified;
+5. element-local Bricks controls for true one-off styling;
+6. custom CSS only when native Bricks controls cannot express the requirement cleanly.
+
+Examples:
+
+- real list → List / Icon List, not many Basic Text elements inside a Div;
+- Image object-fit → native Image Object fit control, not custom CSS;
+- reusable styling → global class;
+- unique one-off styling → element-local Bricks controls;
+- CSS ID → only for a real unique HTML-id purpose, never as a class-name substitute;
+- repeated design token → existing/new justified global variable;
+- responsive layout → prefer fluid/intrinsic layout before breakpoint patch chains.
+
+When the site has no existing naming convention, BEM is a useful default for reusable component classes, but not for utility or framework-owned classes.
+
+Detailed references:
+
+- [Bricks-Native Authoring Standard](docs/bricks-native-authoring-standard.md)
+- [Native Authoring Review](prompts/23-native-authoring-review.md)
 
 ## References
 
