@@ -1,0 +1,28 @@
+name: Validate Release Metadata
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - VERSION
+      - STARTER-MANIFEST.json
+      - CHANGELOG.md
+      - scripts/**
+      - .github/workflows/**
+  pull_request:
+    paths:
+      - VERSION
+      - STARTER-MANIFEST.json
+      - CHANGELOG.md
+      - scripts/**
+      - .github/workflows/**
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/validate_release_metadata.py
