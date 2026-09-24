@@ -25,6 +25,8 @@ Use separate Codex threads for separate pages, features, or workstreams.
 
 Run `prompts/00-full-site-bootstrap-audit.md` in a fresh thread.
 
+The audit first classifies site maturity (ESTABLISHED, PARTIAL / IN PROGRESS, or GREENFIELD) and design-system authority (Bricks-native, external framework, hybrid, custom-code-driven, or undefined).
+
 The audit should build a persistent site-specific knowledge base covering:
 
 - plugin and integration ecosystem;
@@ -36,8 +38,11 @@ The audit should build a persistent site-specific knowledge base covering:
 - dynamic data;
 - queries;
 - WooCommerce when active;
-- rendered frontend and responsive visual patterns;
+- rendered frontend and responsive visual patterns when meaningful public references exist;
+- design-system ownership/provenance, including external CSS frameworks when present;
 - site-wide conventions and known exceptions.
+
+For GREENFIELD projects, the audit must not invent a visual language from missing evidence. A separate design-system creation/seed workflow should precede broad page design.
 
 ## 4. Reduce permissions
 
@@ -59,7 +64,23 @@ For a specific task:
 8. verify the rendered frontend;
 9. update local documentation when the architecture or design rules materially changed.
 
-## 6. Re-audit when needed
+## 6. Handle global design-system changes
+
+Treat Theme Styles, global classes, global variables, and external framework tokens/classes as global-impact resources.
+
+For global changes:
+
+1. verify which system owns the resource;
+2. identify representative affected pages/templates;
+3. capture relevant pre-change state where practical;
+4. make the scoped change;
+5. re-read persisted state;
+6. browser-verify representative pages at relevant viewport widths;
+7. refresh affected documentation and snapshots.
+
+Use `prompts/02-design-system-change-workflow.md` for this class of task.
+
+## 7. Re-audit when needed
 
 Do not rerun the entire bootstrap audit after every change.
 
