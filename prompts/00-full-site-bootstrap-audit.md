@@ -539,6 +539,51 @@ Document how ACF participates in the site's data architecture.
 Do NOT modify field groups.
 
 --------------------------------------------------
+2.6.1 — ADVANCED THEMER / BUNDLED ACF HEURISTIC
+--------------------------------------------------
+
+Advanced Themer can bundle ACF Pro for its own Theme Settings functionality.
+
+If:
+- Advanced Themer is active;
+- ACF runtime APIs/data sources are demonstrably available and working;
+- standalone ACF / ACF Pro is absent from the standard plugin list;
+
+then do NOT mark ACF as absent.
+
+Investigate loader provenance.
+
+Classify as:
+
+- VERIFIED: ADVANCED THEMER BUNDLED
+  when runtime/file-path/version evidence confirms the ACF copy is loaded from Advanced Themer.
+
+- STRONG EVIDENCE / LIKELY ADVANCED THEMER BUNDLED
+  when Advanced Themer is active + ACF runtime works + standalone ACF is absent,
+  but the loader path cannot be verified.
+
+- UNKNOWN LOADER
+  when ACF runtime exists but evidence does not identify the loader.
+
+Do not treat this as universal.
+ACF may instead come from:
+- standalone ACF / ACF Pro;
+- another plugin bundle;
+- MU-plugin;
+- Composer/custom loader;
+- theme/child-theme code.
+
+Also treat Advanced Themer itself as architecture-relevant when it owns or influences:
+- Theme Settings;
+- classes/variables;
+- Core Framework integration;
+- custom CSS/design-system behavior;
+- Bricks builder authoring behavior.
+
+Official evidence:
+https://advancedthemer.com/changelogs/
+
+--------------------------------------------------
 2.7 — ACPT
 --------------------------------------------------
 
