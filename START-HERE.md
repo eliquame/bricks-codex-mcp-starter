@@ -94,12 +94,14 @@ Read at minimum from the STARTER REPOSITORY, not from the target project:
 - prompts/00-full-site-bootstrap-audit.md
 - prompts/10-design-system-change-workflow.md
 - prompts/11-greenfield-design-system-seed.md
+- prompts/23-native-authoring-review.md
 - prompts/90-agents-maintenance-and-sync.md
 - docs/setup-bricks-mcp.md
 - docs/setup-codex.md
 - docs/security.md
 - docs/workflow.md
 - docs/design-system-lifecycle.md
+- docs/bricks-native-authoring-standard.md
 - templates/audit-progress.template.md
 - templates/documentation-structure.md
 
