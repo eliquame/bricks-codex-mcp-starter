@@ -15,6 +15,43 @@ Use only the MCP server assigned to this project unless the user explicitly inst
 
 If sources disagree, document the discrepancy and prefer the relevant live source.
 
+## Site maturity and design-system authority
+
+Record and respect the project's current maturity:
+
+- ESTABLISHED
+- PARTIAL / IN PROGRESS
+- GREENFIELD
+
+Also record the current design-system authority:
+
+- BRICKS NATIVE
+- EXTERNAL FRAMEWORK
+- HYBRID
+- CUSTOM CODE DRIVEN
+- UNDEFINED / PARTIAL
+
+If the project is GREENFIELD or the design system is undefined, do not invent site-wide visual rules from generic defaults. Establish or explicitly approve a design-system direction before broad design work.
+
+When an external CSS/design framework owns classes, variables, or tokens, treat those resources as provider-owned even if they are visible or mirrored in Bricks. Do not create redundant Bricks-native duplicates.
+
+## Global design-system changes
+
+Changes to Theme Styles, global classes, global variables, framework tokens/classes, or other site-wide design sources are global-impact changes.
+
+Before such a change:
+
+1. verify ownership and current live state;
+2. identify representative affected pages/templates;
+3. capture relevant pre-change state where practical.
+
+After the change:
+
+1. re-read persisted state;
+2. browser-verify representative affected frontend pages at relevant viewport widths;
+3. refresh affected design-system documentation and snapshots;
+4. document intentional breaking changes or migration requirements.
+
 ## Before every write
 
 1. Read this file.
