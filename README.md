@@ -84,6 +84,12 @@ A Codex megáll és pontosan megmondja, mit kell tenned, ha például:
 - új chat / Codex restart kell;
 - hiányzik egy WordPress/Bricks jogosultság.
 
+Ha új chat vagy restart kell, a folyamat előtte elmenti az állapotot a `docs/bricks/00-bootstrap-status.md` fájlba. Az új chatben elég ezt írni:
+
+```text
+Continue the Bricks/Codex bootstrap from docs/bricks/00-bootstrap-status.md
+```
+
 ## Credentialek
 
 A starter alapelve:
@@ -311,7 +317,7 @@ Codex may pause for:
 - Codex restart/new chat;
 - missing WordPress/Bricks permissions.
 
-Ha új chat kell, a folyamat előtte elmenti az állapotot a `docs/bricks/00-bootstrap-status.md` fájlba. Az új chatben elég ezt írni:
+If a new chat or restart is required, the workflow first saves progress to `docs/bricks/00-bootstrap-status.md`. In the new chat, simply say:
 
 ```text
 Continue the Bricks/Codex bootstrap from docs/bricks/00-bootstrap-status.md
