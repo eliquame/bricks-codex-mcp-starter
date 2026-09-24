@@ -277,6 +277,43 @@ Ha egy meglévő Codex projektet egy korábbi starter verzióval auditáltál, n
 
 ZIP-ből átadott starter esetén a `STARTER-MANIFEST.json` ad csomagazonosítót/revíziót akkor is, ha Git commit SHA nem érhető el.
 
+## Verziózás és release-ek
+
+A repository mostantól **Semantic Versioning** szerint verziózott.
+
+Az aktuális verzió egyetlen gépi forrása:
+
+- [VERSION](VERSION)
+
+A részletes változáslista:
+
+- [CHANGELOG.md](CHANGELOG.md)
+
+A release folyamat és verziószabályok:
+
+- [Release & Versioning Policy](docs/releasing.md)
+
+Pre-1.0 fejlesztési fázisban:
+
+- **PATCH** (`0.1.0 → 0.1.1`) = fix, dokumentációs korrekció, kisebb kompatibilis javítás;
+- **MINOR** (`0.1.x → 0.2.0`) = új workflow/feature vagy lényeges viselkedésváltozás;
+- **1.0.0** = későbbi stabil/public baseline.
+
+A `CHANGELOG.md` nem commit-lista. Csak felhasználói szempontból érdemi változásokat tartalmaz:
+
+- **Added** = új feature;
+- **Changed** = improve / behavior change;
+- **Fixed** = javítás;
+- **Security** = biztonsági változás.
+
+GitHub Release publikáláshoz:
+
+```text
+GitHub → Actions → Publish Release → Run workflow
+```
+
+A workflow ellenőrzi a `VERSION`, `STARTER-MANIFEST.json` és `CHANGELOG.md` egyezését, létrehozza a `vX.Y.Z` taget, majd a matching changelog-szekcióból elkészíti a GitHub Release note-ot.
+
 ## Ha kézzel akarod beállítani
 
 A manuális dokumentáció megmarad referenciának:
@@ -484,6 +521,43 @@ Detailed references:
 
 - [Bricks-Native Authoring Standard](docs/bricks-native-authoring-standard.md)
 - [Native Authoring Review](prompts/23-native-authoring-review.md)
+
+## Versioning and releases
+
+The repository now follows **Semantic Versioning**.
+
+Canonical current version:
+
+- [VERSION](VERSION)
+
+Human-readable history:
+
+- [CHANGELOG.md](CHANGELOG.md)
+
+Release process and version rules:
+
+- [Release & Versioning Policy](docs/releasing.md)
+
+During the pre-1.0 phase:
+
+- **PATCH** (`0.1.0 → 0.1.1`) = fixes, documentation corrections, small compatible behavior corrections;
+- **MINOR** (`0.1.x → 0.2.0`) = new workflows/features or material behavior changes;
+- **1.0.0** = future stable/public baseline.
+
+CHANGELOG categories map directly to release notes:
+
+- **Added** = new features;
+- **Changed** = improvements/behavior changes;
+- **Fixed** = fixes;
+- **Security** = security-related changes.
+
+Publish through:
+
+```text
+GitHub → Actions → Publish Release → Run workflow
+```
+
+The workflow validates release metadata, creates tag `vX.Y.Z`, and publishes GitHub Release notes from the matching changelog section.
 
 ## References
 
