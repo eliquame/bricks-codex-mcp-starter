@@ -89,12 +89,14 @@ Use the following structure where appropriate:
 docs/bricks/
     00-audit-progress.md
     00-site-overview.md
+    00-site-state.md
     site-inventory.md
 
     01-plugin-ecosystem.md
     02-data-architecture.md
 
     03-design-system.md
+    design-system-authority.md
     04-theme-styles.md
     05-global-classes.md
     06-global-variables.md
@@ -130,6 +132,7 @@ docs/bricks/
         plugin-inventory.json
         data-architecture.json
         design-context.json
+        design-system-authority.json
         templates.json
         other useful machine-readable snapshots
 
@@ -159,9 +162,13 @@ Track discovered resources using statuses such as:
 - NOT ACTIVE
 - NOT INSTALLED
 - NOT APPLICABLE
+- INSUFFICIENT EVIDENCE
 
 Track at minimum:
 
+- site maturity classification
+- design-system state
+- design-system authority/providers
 - pages
 - templates
 - template-rendered frontend examples
@@ -239,6 +246,52 @@ where available.
 
 Use pagination/batching where required.
 
+--------------------------------------------------
+1.1 — SITE MATURITY CLASSIFICATION
+--------------------------------------------------
+
+Classify the current project before deriving visual or design-system rules.
+
+Create/update:
+
+docs/bricks/00-site-state.md
+
+Classify SITE_MATURITY as one of:
+
+- ESTABLISHED
+- PARTIAL / IN PROGRESS
+- GREENFIELD
+
+Use evidence, not assumptions.
+
+ESTABLISHED means there is enough real site content and rendered frontend
+evidence to derive recurring structural and visual conventions.
+
+PARTIAL / IN PROGRESS means some real pages, templates, styles or visual
+patterns exist, but there is not enough evidence to treat every observed
+pattern as a mature site-wide rule.
+
+GREENFIELD means the project is blank or effectively blank for design-learning
+purposes: no meaningful established frontend system exists yet.
+
+Also classify DESIGN_SYSTEM_STATE as:
+
+- ESTABLISHED
+- PARTIAL
+- UNDEFINED
+
+Do not equate "Bricks is installed" with "a design system exists".
+
+If the site is GREENFIELD or the design system is UNDEFINED:
+
+- do not invent visual conventions from absent evidence;
+- do not promote generic Bricks defaults to project rules;
+- mark visual-pattern discovery as NOT APPLICABLE or INSUFFICIENT EVIDENCE
+  where appropriate;
+- document that a separate design-system creation/seed workflow is required
+  before design-heavy page construction;
+- keep this bootstrap task read-only.
+
 ==================================================
 PHASE 2 — PLUGIN AND INTEGRATION ECOSYSTEM
 ==================================================
@@ -284,6 +337,9 @@ The goal is to understand which plugins materially affect:
 - custom code
 - templates
 - reusable content systems
+- CSS frameworks
+- design-system providers
+- token/class/variable providers
 
 --------------------------------------------------
 2.1 — PLUGIN INVENTORY
@@ -478,7 +534,54 @@ If ACPT / ACPT Pro is active, inspect where accessible:
 Document its role separately from ACF/JetEngine.
 
 --------------------------------------------------
-2.8 — MUST-USE / CUSTOM SITE CODE
+2.8 — CSS FRAMEWORK / DESIGN-SYSTEM PROVIDERS
+--------------------------------------------------
+
+Detect whether an active plugin, theme layer, or custom integration provides
+a site-wide CSS/design framework.
+
+Examples may include Core Framework or another comparable system.
+
+Do NOT assume any specific framework is installed.
+
+If a design-system provider is detected, inspect where current permissions allow:
+
+- framework/provider name and version
+- active/inactive state
+- integration with Bricks
+- framework-owned classes
+- framework-owned variables/tokens
+- spacing/typography/color systems
+- breakpoint strategy where relevant
+- generated/synced Bricks resources
+- naming conventions
+- source-of-truth location
+- whether resources are edited in the provider, in Bricks, or both
+- dependencies and synchronization behaviour observable from the current site
+
+Classify every major design-system resource by ownership/provenance where possible:
+
+- BRICKS OWNED
+- FRAMEWORK / PLUGIN OWNED
+- THEME / CHILD-THEME OWNED
+- CUSTOM-CODE OWNED
+- PAGE-LOCAL
+- UNKNOWN
+
+Do not duplicate framework-owned classes or variables as Bricks-native resources
+merely because they appear in the Bricks UI.
+
+If provider-owned resources are mirrored or synchronized into Bricks, preserve
+their provider ownership in the documentation.
+
+Create plugin-specific documentation under:
+
+docs/bricks/plugins/
+
+when the provider materially affects page building.
+
+--------------------------------------------------
+2.9 — MUST-USE / CUSTOM SITE CODE
 --------------------------------------------------
 
 Where visible and permitted, identify:
@@ -584,13 +687,48 @@ Document:
 Create/update:
 
 docs/bricks/03-design-system.md
+docs/bricks/design-system-authority.md
 docs/bricks/04-theme-styles.md
 docs/bricks/05-global-classes.md
 docs/bricks/06-global-variables.md
 docs/bricks/07-colors-typography.md
 docs/bricks/08-breakpoints.md
 
-Also save useful machine-readable snapshots.
+Also save useful machine-readable snapshots, including where useful:
+
+docs/bricks/snapshots/design-system-authority.json
+
+Before documenting the design system, determine its authority model.
+
+Classify DESIGN_SYSTEM_AUTHORITY as one of:
+
+- BRICKS NATIVE
+- EXTERNAL FRAMEWORK
+- HYBRID
+- CUSTOM CODE DRIVEN
+- UNKNOWN / UNDEFINED
+
+Document which layer owns:
+
+- colors
+- typography
+- spacing
+- breakpoints
+- global classes
+- variables/tokens
+- components/patterns
+- theme-level visual rules
+
+If Theme Styles are empty, minimal, or clearly not authoritative, do not treat
+that as a failure. Determine whether another provider owns the system.
+
+If no authoritative design system exists:
+
+- record DESIGN_SYSTEM_STATE: UNDEFINED or PARTIAL;
+- do not invent a complete system during this read-only bootstrap;
+- document what does exist;
+- add a future-project rule that design-system creation/approval should happen
+  before broad page design work.
 
 Do NOT invent a design rule because a value occurs once.
 
@@ -796,10 +934,24 @@ Never expose private customer/order data in documentation.
 PHASE 9 — FRONTEND VISUAL AUDIT AND DESIGN LANGUAGE
 ==================================================
 
-The Bricks/MCP structure alone is NOT sufficient for understanding this site's
-visual design language.
+The Bricks/MCP structure alone is NOT sufficient for understanding a site's
+visual design language when a meaningful public design already exists.
 
-You MUST also inspect the rendered PUBLIC FRONTEND in a browser.
+Frontend visual auditing is CONDITIONAL on site maturity.
+
+IF SITE_MATURITY = ESTABLISHED:
+    perform the full frontend visual audit below.
+
+IF SITE_MATURITY = PARTIAL / IN PROGRESS:
+    inspect all meaningful available public references, but clearly mark
+    conclusions as limited by incomplete evidence. Do not promote isolated
+    experiments to site-wide rules.
+
+IF SITE_MATURITY = GREENFIELD:
+    verify whether any meaningful public visual reference exists.
+    If none exists, mark the deep visual audit and visual pattern library as
+    NOT APPLICABLE / INSUFFICIENT EVIDENCE.
+    Do not invent a visual language from default WordPress/Bricks output.
 
 This remains READ-ONLY.
 
@@ -962,7 +1114,11 @@ Create/update:
 
 docs/bricks/16-visual-patterns.md
 
-Identify reusable patterns such as:
+If SITE_MATURITY = GREENFIELD and no meaningful frontend patterns exist,
+do not fabricate this library. Record that the pattern library requires future
+design-system/page development.
+
+Otherwise identify reusable patterns such as:
 
 - homepage hero
 - standard hero
@@ -1035,11 +1191,15 @@ Create/update:
 docs/bricks/17-site-rules.md
 docs/bricks/18-known-patterns.md
 
-Derive rules using ALL relevant evidence:
+Derive rules using ALL relevant evidence that actually exists:
 
 A. Bricks architecture
 B. WordPress/plugin/data architecture
-C. browser-rendered frontend
+C. browser-rendered frontend when meaningful visual references exist
+D. external framework/design-system providers when present
+
+For GREENFIELD or visually immature sites, do not manufacture visual rules.
+Record explicit unknowns and future design-system requirements instead.
 
 Separate:
 
@@ -1176,6 +1336,42 @@ Prefer the established site architecture unless the user explicitly requests
 a redesign/rearchitecture.
 
 --------------------------------------------------
+DESIGN-SYSTEM AUTHORITY AND LIFECYCLE
+--------------------------------------------------
+
+The project documentation must state which system owns global design resources.
+
+Possible authority models include:
+
+- BRICKS NATIVE
+- EXTERNAL FRAMEWORK
+- HYBRID
+- CUSTOM CODE DRIVEN
+- UNDEFINED / PARTIAL
+
+Future agents must not create duplicate Bricks classes/variables when an
+external framework/provider already owns equivalent resources.
+
+If the design system is UNDEFINED or materially incomplete, future design-heavy
+work must first establish or explicitly approve a design-system direction
+rather than silently inventing one page-by-page.
+
+Changes to any global design-system source — including Bricks Theme Styles,
+global classes, global variables, external framework tokens/classes, or
+theme/custom-code design tokens — must be treated as global-impact changes.
+
+For such changes future agents must:
+
+1. verify resource ownership and current live state;
+2. identify affected/representative pages and templates;
+3. preserve or snapshot the relevant pre-change state where practical;
+4. apply only the approved global change;
+5. re-read persisted state;
+6. browser-verify representative affected frontend pages at relevant viewports;
+7. update design-system documentation and snapshots;
+8. document any intentional breaking change or migration requirement.
+
+--------------------------------------------------
 BEFORE EVERY WRITE
 --------------------------------------------------
 
@@ -1295,6 +1491,11 @@ COMPLETION REPORT
 
 At completion report:
 
+- SITE_MATURITY classification
+- DESIGN_SYSTEM_STATE
+- DESIGN_SYSTEM_AUTHORITY
+- detected design-system/CSS framework providers
+- whether full frontend visual auditing was applicable
 - pages discovered
 - pages MCP-inspected
 - public pages browser-inspected
