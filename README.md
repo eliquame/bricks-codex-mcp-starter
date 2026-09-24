@@ -226,6 +226,21 @@ Minden site-hoz ajánlott:
 
 A project `AGENTS.md` rögzíti, melyik MCP server használható az adott projectben.
 
+## Napi használat
+
+A bootstrap után **nem kell prompt-fájlneveket megjegyezned**.
+
+Normál esetben csak mondd el Codexnek természetes nyelven a feladatot, például:
+
+- „Készíts egy új landing oldalt ehhez a szolgáltatáshoz.”
+- „Javítsd ki ennek az oldalnak a mobil layoutját.”
+- „Módosítsd a single post template hero részét.”
+- „Adjunk hozzá egy új ACF mezőt és használd a Bricks template-ben.”
+- „Frissítsük a globális spacing rendszert.”
+- „Ellenőrizd újra a WooCommerce template architektúrát.”
+
+A projekt `AGENTS.md` automatikusan a megfelelő workflow-hoz irányítja a Codexet. A `prompts/` fájlok a részletes, kanonikus munkafolyamatok; a usernek általában nem kell őket kézzel kiválasztania.
+
 ## Ha kézzel akarod beállítani
 
 A manuális dokumentáció megmarad referenciának:
@@ -380,6 +395,14 @@ The bootstrap also determines design-system authority:
 - **UNKNOWN / UNDEFINED**
 
 WooCommerce is always detected and deeply audited only when relevant/active.
+
+## Normal day-to-day use
+
+After bootstrap, you do **not** need to memorize prompt filenames.
+
+Ask Codex for the task naturally. The project `AGENTS.md` routes the task to the appropriate workflow (new page, existing page, template, design system, plugin/data architecture, WooCommerce, or re-audit) when the intent is clear.
+
+The files under `prompts/` are the canonical detailed workflows, not a menu the user must manually operate.
 
 ## References
 
