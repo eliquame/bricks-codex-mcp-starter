@@ -270,6 +270,19 @@ Major audit/reference documents should include, where practical:
 
 Record only supported dates, IDs, and status.
 
+## Bootstrap orchestration and resume
+
+The one-prompt starter may require a new Codex chat or full Codex restart while MCP or skills are being loaded.
+
+When `docs/bricks/00-bootstrap-status.md` exists and its status is `IN PROGRESS` or `BLOCKED`:
+
+- read it before starting normal site work;
+- if the user asks to continue/setup/resume, continue from its recorded phase instead of restarting the whole bootstrap;
+- do not delete or overwrite bootstrap progress from assumptions;
+- never record secrets in the status file.
+
+The bootstrap status file tracks setup/orchestration. The separate `docs/bricks/00-audit-progress.md` tracks site-audit coverage.
+
 ## Bootstrap-audit mode
 
 During the initial full-site bootstrap audit:
