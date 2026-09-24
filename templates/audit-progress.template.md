@@ -8,6 +8,10 @@
 - Audit started:
 - Last updated:
 - Audit status: IN PROGRESS
+- Site maturity: UNKNOWN
+- Design-system state: UNKNOWN
+- Design-system authority: UNKNOWN
+- WooCommerce status: UNKNOWN
 
 ## Status vocabulary
 
@@ -20,6 +24,7 @@
 - NOT ACTIVE
 - NOT INSTALLED
 - NOT APPLICABLE
+- INSUFFICIENT EVIDENCE
 
 ## Site resources
 
@@ -28,32 +33,51 @@
 
 ## Plugin / integration audit
 
-| Plugin / integration | Installed | Active | Architecture relevant | Documented | Notes |
-|---|---|---|---|---|---|
+| Plugin / integration | Installed | Active | Architecture relevant | Documented | Status | Notes |
+|---|---|---|---|---|---|---|
 
 ## Data architecture
 
-| Resource | Owner/source | Type | Inspected | Documented | Notes |
-|---|---|---|---|---|---|
+| Resource | Owner/source | Type | Inspected | Documented | Status | Notes |
+|---|---|---|---|---|---|---|
 
 ## Bricks design system
 
-| Area | Inspected | Documented | Verified | Notes |
-|---|---|---|---|---|
-| Theme styles | | | | |
-| Global classes | | | | |
-| Global variables | | | | |
-| Colors | | | | |
-| Typography | | | | |
-| Breakpoints | | | | |
-| Components | | | | |
-| Queries | | | | |
+| Area | Owner/source | Inspected | Documented | Verified | Notes |
+|---|---|---|---|---|---|
+| Theme Styles | | | | | |
+| Global classes | | | | | |
+| Global variables/tokens | | | | | |
+| Colors | | | | | |
+| Typography | | | | | |
+| Spacing | | | | | |
+| Breakpoints | | | | | |
+| Components | | | | | |
+| Queries | | | | | |
+
+## Pages
+
+| Page | ID | MCP inspected | Browser inspected | Documented | Status | Notes |
+|---|---:|---|---|---|---|---|
+
+## Templates
+
+| Template | ID | Type | MCP inspected | Frontend example checked | Documented | Status | Notes |
+|---|---:|---|---|---|---|---|---|
 
 ## WooCommerce
 
 - Status: UNKNOWN
 - Deep audit required: UNKNOWN
+- Audit result: NOT STARTED
 
 ## Completion gate
 
-Do not mark COMPLETE while any discovered relevant resource remains unprocessed without an explicit reason.
+Do not mark the audit COMPLETE while any discovered relevant resource remains unprocessed without an explicit documented reason.
+
+A resource may remain unverified only when the reason is recorded, for example:
+- permission blocked;
+- not publicly renderable;
+- not installed/active;
+- not applicable;
+- insufficient evidence on a GREENFIELD/PARTIAL site.
