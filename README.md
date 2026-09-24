@@ -23,6 +23,39 @@ A starter segítségével a Codex egy új webhelyen:
 
 Ez a repository **nem egy konkrét webhely dokumentációja**. A benne lévő promptok és template-ek site-agnosztikusak.
 
+### Webhely-érettségi módok
+
+A bootstrap audit nem feltételezi, hogy a webhely már kész vagy publikus. Először besorolja a projektet:
+
+- **ESTABLISHED** — működő, tartalmilag és vizuálisan kialakult webhely. A teljes publikus frontend- és vizuális audit kötelező.
+- **PARTIAL / IN PROGRESS** — vannak használható oldalak vagy designminták, de a rendszer még nem teljes. A Codex csak a ténylegesen megfigyelt mintákat tekintheti szabálynak.
+- **GREENFIELD** — szűz vagy lényegében üres WordPress / Bricks projekt. Ilyenkor nincs értelme nem létező vizuális szabályokat „kitalálni” a bootstrap auditban; a vizuális audit korlátozott vagy N/A, és a design system létrehozása külön, jóváhagyott munkafolyamat.
+
+### Design system forrása és tulajdonjoga
+
+A design system nem feltétlenül Bricks Theme Stylesból származik. A bootstrap auditnak meg kell állapítania, hogy a rendszer:
+
+- **BRICKS NATIVE**
+- **EXTERNAL FRAMEWORK**
+- **HYBRID**
+- **CUSTOM CODE DRIVEN**
+- **UNDEFINED / PARTIAL**
+
+Például ha egy CSS framework plugin — például Core Framework vagy más hasonló rendszer — adja a tokeneket, global classokat és variable-öket, akkor ezeket framework-owned erőforrásként kell dokumentálni. A Codex ne hozzon létre Bricksben felesleges duplikátumokat, és ne kezelje a framework által birtokolt erőforrásokat Bricks-native elemként.
+
+### Design system változások
+
+Theme Styles, global classok, variable-ök vagy külső framework tokenek módosítása **globális hatású változásnak** számít. Ilyenkor célzott impact audit szükséges:
+
+1. aktuális állapot és ownership ellenőrzése;
+2. érintett oldalak/template-ek azonosítása;
+3. módosítás;
+4. persisted state visszaolvasása;
+5. reprezentatív frontend/regression ellenőrzés több viewporton;
+6. site dokumentáció és snapshotok frissítése.
+
+A részletes szabályokat a `docs/design-system-lifecycle.md`, a végrehajtási promptot pedig a `prompts/02-design-system-change-workflow.md` tartalmazza.
+
 Minden konkrét webhely külön Codex projektet kap, például:
 
 ```text
@@ -45,7 +78,8 @@ bricks-codex-mcp-starter/
 ├── .gitignore
 ├── prompts/
 │   ├── 00-full-site-bootstrap-audit.md
-│   └── 01-agents-md-refresh.md
+│   ├── 01-agents-md-refresh.md
+│   └── 02-design-system-change-workflow.md
 ├── templates/
 │   ├── AGENTS.template.md
 │   └── audit-progress.template.md
@@ -96,6 +130,39 @@ With this starter, Codex can:
 
 This repository is **not site-specific documentation**. All prompts and templates here are site-agnostic.
 
+### Site maturity modes
+
+The bootstrap audit does not assume that the site is already complete or publicly established. It first classifies the project:
+
+- **ESTABLISHED** — a functioning site with meaningful content and visual patterns. Full public frontend and visual auditing is required.
+- **PARTIAL / IN PROGRESS** — some usable pages or design patterns exist, but the system is incomplete. Codex may only promote actually observed patterns to rules.
+- **GREENFIELD** — a blank or effectively empty WordPress / Bricks project. The bootstrap audit must not invent visual rules from missing evidence; frontend visual auditing is limited or N/A, and design-system creation becomes a separate approved workflow.
+
+### Design-system source and ownership
+
+The design system does not have to originate from Bricks Theme Styles. The bootstrap audit must determine whether the project is:
+
+- **BRICKS NATIVE**
+- **EXTERNAL FRAMEWORK**
+- **HYBRID**
+- **CUSTOM CODE DRIVEN**
+- **UNDEFINED / PARTIAL**
+
+If a CSS framework plugin — for example Core Framework or an equivalent system — owns tokens, global classes, and variables, those resources must be documented as framework-owned. Codex should not create redundant Bricks-native duplicates or treat provider-owned resources as if Bricks owned them.
+
+### Design-system changes
+
+Changes to Theme Styles, global classes, global variables, or external framework tokens are **global-impact changes**. They require a targeted impact workflow:
+
+1. verify the current state and ownership;
+2. identify dependent pages/templates;
+3. apply the change;
+4. re-read persisted state;
+5. perform representative frontend regression checks at relevant viewports;
+6. refresh project documentation and snapshots.
+
+See `docs/design-system-lifecycle.md` and `prompts/02-design-system-change-workflow.md`.
+
 Each real website should have its own separate Codex project containing its generated `AGENTS.md` and `docs/bricks/` knowledge base.
 
 ### Repository structure
@@ -107,7 +174,8 @@ bricks-codex-mcp-starter/
 ├── .gitignore
 ├── prompts/
 │   ├── 00-full-site-bootstrap-audit.md
-│   └── 01-agents-md-refresh.md
+│   ├── 01-agents-md-refresh.md
+│   └── 02-design-system-change-workflow.md
 ├── templates/
 │   ├── AGENTS.template.md
 │   └── audit-progress.template.md
