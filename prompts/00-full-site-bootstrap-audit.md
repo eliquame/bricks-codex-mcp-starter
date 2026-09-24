@@ -1,0 +1,1353 @@
+# Full Site Bootstrap Audit Prompt
+
+Use this prompt as the first major Codex task after a new Bricks site has been connected through MCP and the Bricks skills are available.
+
+```text
+We are bootstrapping the long-term Codex project repository for the currently connected WordPress / Bricks website.
+
+This task is SITE READ-ONLY.
+
+You may create and update files inside the current local Codex project folder,
+but you MUST NOT modify anything on the WordPress / Bricks site.
+
+Use the installed Bricks skills where relevant, especially:
+
+- bricks-start-here
+- bricks-agent-repository
+- bricks-site-audit
+- bricks-audit-design-system
+- bricks-design-systems
+- bricks-naming-conventions
+- bricks-breakpoints
+- bricks-templates-conditions
+- bricks-components
+- bricks-dynamic-data
+- bricks-global-queries
+- bricks-custom-code
+- bricks-headers-footers
+- bricks-woocommerce
+- bricks-browser-verify
+- bricks-quality-gate
+
+Treat runtime data returned by the connected Bricks MCP site as authoritative
+for current Bricks structure and configuration.
+
+Treat the rendered public frontend in the browser as authoritative for actual
+visual appearance.
+
+Treat the current WordPress plugin/theme environment as authoritative for
+site integrations and available functionality.
+
+Do not make assumptions from generic Bricks or WordPress knowledge where the
+actual site state can be inspected.
+
+==================================================
+PRIMARY GOAL
+==================================================
+
+Build a durable local documentation repository that future Codex threads can
+use to understand this website before making changes.
+
+The resulting project knowledge base must cover:
+
+A. the actual Bricks architecture and design system
+B. the actual rendered visual language of the public website
+C. the relevant WordPress plugin/integration ecosystem
+D. the site's content/data architecture
+E. WooCommerce architecture whenever WooCommerce is active
+
+The objective is that future Codex tasks can:
+
+- understand how this site is built
+- understand how this site actually looks
+- understand where its dynamic data comes from
+- understand which plugins own which functionality
+- reuse its established design system
+- reuse existing custom fields, CPTs, taxonomies and relationships
+- reuse established query/data patterns
+- reproduce its established visual language
+- avoid unnecessary duplicate plugins, fields, queries, classes or variables
+- avoid breaking integrations by treating Bricks in isolation
+
+This is not only a technical Bricks audit.
+
+It is a:
+
+- Bricks architecture audit
+- WordPress integration audit
+- data-model audit
+- plugin ecosystem audit
+- frontend visual audit
+- design-language audit
+
+==================================================
+DOCUMENTATION STRUCTURE
+==================================================
+
+Use the following structure where appropriate:
+
+docs/bricks/
+    00-audit-progress.md
+    00-site-overview.md
+    site-inventory.md
+
+    01-plugin-ecosystem.md
+    02-data-architecture.md
+
+    03-design-system.md
+    04-theme-styles.md
+    05-global-classes.md
+    06-global-variables.md
+    07-colors-typography.md
+    08-breakpoints.md
+
+    09-templates.md
+    10-components.md
+    11-dynamic-data.md
+    12-queries.md
+    13-custom-code.md
+
+    14-woocommerce.md
+
+    15-frontend-visual-audit.md
+    16-visual-patterns.md
+
+    17-site-rules.md
+    18-known-patterns.md
+    19-audit-findings.md
+
+    pages/
+        <page-slug>.md
+
+    templates/
+        <template-name>.md
+
+    plugins/
+        <plugin-or-integration-name>.md
+
+    snapshots/
+        site-inventory.json
+        plugin-inventory.json
+        data-architecture.json
+        design-context.json
+        templates.json
+        other useful machine-readable snapshots
+
+    visual-references/
+        screenshots or browser captures where useful and supported
+
+Do not create empty documents merely to satisfy the structure.
+
+==================================================
+PHASE 0 — AUDIT PROGRESS AND RESUMABILITY
+==================================================
+
+Before performing the full audit, create:
+
+docs/bricks/00-audit-progress.md
+
+This file must act as the persistent checklist for the entire bootstrap audit.
+
+Track discovered resources using statuses such as:
+
+- DISCOVERED
+- INSPECTED
+- DOCUMENTED
+- VISUALLY VERIFIED
+- VERIFIED
+- ACCESS BLOCKED
+- NOT ACTIVE
+- NOT INSTALLED
+- NOT APPLICABLE
+
+Track at minimum:
+
+- pages
+- templates
+- template-rendered frontend examples
+- plugins
+- plugin integrations
+- CPTs
+- taxonomies
+- custom field systems
+- relationships
+- queries
+- global classes
+- global variables
+- theme styles
+- breakpoints
+- components
+- WooCommerce
+- other relevant resources
+
+The audit must be resumable if interrupted.
+
+Do not declare the audit complete if discovered resources remain unprocessed
+without an explicit documented reason.
+
+==================================================
+PHASE 1 — SITE INVENTORY
+==================================================
+
+Enumerate all relevant WordPress and Bricks resources available to the
+connected user.
+
+Inspect and inventory where available:
+
+- Bricks-enabled pages
+- landing pages
+- Bricks templates
+- template types
+- template conditions
+- headers
+- footers
+- custom post types
+- taxonomies
+- WooCommerce templates
+- components
+- global queries
+- global classes
+- global variables
+- color palettes
+- theme styles
+- breakpoints
+- relevant global settings
+- custom fonts
+- dynamic-data usage
+- reusable structural patterns
+- page-level custom CSS or code where readable
+- important post types rendered through Bricks
+- relevant plugin-generated resources
+
+Create:
+
+docs/bricks/site-inventory.md
+docs/bricks/snapshots/site-inventory.json
+docs/bricks/00-site-overview.md
+
+Include identifiers such as:
+
+- post ID
+- title
+- slug
+- URL
+- resource type
+- template type
+- publication status
+
+where available.
+
+Use pagination/batching where required.
+
+==================================================
+PHASE 2 — PLUGIN AND INTEGRATION ECOSYSTEM
+==================================================
+
+Inspect the WordPress plugin environment.
+
+This is READ-ONLY.
+
+Do NOT:
+
+- install plugins
+- delete plugins
+- activate plugins
+- deactivate plugins
+- update plugins
+- change plugin settings
+- change licenses
+- modify plugin files
+
+Create:
+
+docs/bricks/01-plugin-ecosystem.md
+docs/bricks/snapshots/plugin-inventory.json
+
+The goal is NOT merely to dump the plugin list.
+
+The goal is to understand which plugins materially affect:
+
+- site structure
+- Bricks editing
+- dynamic data
+- custom fields
+- CPTs
+- taxonomies
+- relationships
+- queries
+- forms
+- WooCommerce
+- multilingual content
+- SEO output
+- frontend rendering
+- performance/caching relevant to development
+- custom code
+- templates
+- reusable content systems
+
+--------------------------------------------------
+2.1 — PLUGIN INVENTORY
+--------------------------------------------------
+
+Inventory installed plugins where access permits.
+
+For every relevant plugin document where available:
+
+- plugin name
+- plugin slug
+- version
+- active/inactive state
+- apparent purpose
+- whether it materially affects Bricks/content/frontend architecture
+- important dependencies
+- known integration points with Bricks
+- resources owned or generated by that plugin
+
+Do NOT produce deep documentation for plugins that have no meaningful
+relationship to page architecture or editing.
+
+Classify plugins as:
+
+- CORE SITE ARCHITECTURE
+- DATA / DYNAMIC CONTENT
+- ECOMMERCE
+- FORMS
+- SEO
+- MULTILINGUAL
+- PERFORMANCE
+- MEDIA
+- SECURITY
+- EDITOR / BUILDER EXTENSION
+- UTILITY
+- OTHER
+- IRRELEVANT TO BRICKS WORKFLOW
+
+--------------------------------------------------
+2.2 — IMPORTANT OPTIONAL INTEGRATIONS
+--------------------------------------------------
+
+Detect whether important data/content plugins exist.
+
+Examples include, but are not limited to:
+
+- Advanced Custom Fields / ACF Pro
+- JetEngine
+- ACPT / ACPT Pro
+- Meta Box
+- Pods
+- Toolset
+- Carbon Fields
+- Bricks-related dynamic data extensions
+- custom CPT/field plugins
+
+These integrations are OPTIONAL.
+
+Do NOT assume they are installed.
+
+For each one:
+
+IF NOT INSTALLED:
+    mark NOT INSTALLED
+
+IF INSTALLED BUT INACTIVE:
+    mark INSTALLED / INACTIVE
+
+IF ACTIVE:
+    perform the relevant read-only integration audit.
+
+--------------------------------------------------
+2.3 — CUSTOM POST TYPES AND TAXONOMIES
+--------------------------------------------------
+
+Identify custom post types and taxonomies.
+
+Where possible determine:
+
+- post type slug
+- label
+- public/non-public status
+- source/owner
+- plugin or custom-code origin
+- associated taxonomies
+- Bricks usage
+- templates rendering the post type
+- custom fields
+- archive behaviour
+- frontend examples
+
+Do not assume every CPT comes from the same plugin.
+
+--------------------------------------------------
+2.4 — CUSTOM FIELD SYSTEMS
+--------------------------------------------------
+
+If ACF, JetEngine, ACPT, Meta Box or another custom-field system is active,
+inspect its relevant data model where current permissions allow.
+
+Document:
+
+- field groups
+- field sets
+- associated post types
+- taxonomy fields
+- options/settings fields
+- user fields where relevant
+- repeating structures
+- groups
+- relationships
+- media fields
+- dynamic-data usage in Bricks
+
+Do NOT copy sensitive field values unnecessarily.
+
+Focus on:
+
+- schema
+- architecture
+- usage
+- dependencies
+
+rather than private content.
+
+Create plugin-specific files where useful:
+
+docs/bricks/plugins/acf.md
+docs/bricks/plugins/jetengine.md
+docs/bricks/plugins/acpt.md
+
+or equivalent.
+
+--------------------------------------------------
+2.5 — JETENGINE / RELATIONSHIP / QUERY SYSTEMS
+--------------------------------------------------
+
+If JetEngine or a similar plugin is active, inspect where accessible:
+
+- CPTs
+- meta fields
+- taxonomies
+- relations
+- listings
+- Query Builder queries
+- option pages
+- dynamic visibility logic
+- dynamic data used in Bricks
+- relationships between entities
+
+Map these to Bricks usage.
+
+Do NOT assume a JetEngine resource is unused simply because it does not appear
+on the homepage.
+
+--------------------------------------------------
+2.6 — ACF
+--------------------------------------------------
+
+If ACF or ACF Pro is active, inspect where accessible:
+
+- field groups
+- locations
+- field names
+- field types
+- repeaters
+- flexible content
+- groups
+- relationships
+- options pages
+- relevant dynamic tags/use in Bricks
+
+Document how ACF participates in the site's data architecture.
+
+Do NOT modify field groups.
+
+--------------------------------------------------
+2.7 — ACPT
+--------------------------------------------------
+
+If ACPT / ACPT Pro is active, inspect where accessible:
+
+- post types
+- taxonomies
+- meta boxes
+- fields
+- relationships
+- option pages
+- dynamic data integration
+- Bricks usage
+
+Document its role separately from ACF/JetEngine.
+
+--------------------------------------------------
+2.8 — MUST-USE / CUSTOM SITE CODE
+--------------------------------------------------
+
+Where visible and permitted, identify:
+
+- must-use plugins
+- site-specific plugins
+- child-theme functionality
+- custom integration plugins
+
+Only inspect them deeply when relevant to:
+
+- content model
+- Bricks behaviour
+- dynamic data
+- frontend output
+- templates
+- forms
+- WooCommerce
+- site-wide functionality
+
+Do NOT modify source files.
+
+==================================================
+PHASE 3 — DATA ARCHITECTURE
+==================================================
+
+Create:
+
+docs/bricks/02-data-architecture.md
+docs/bricks/snapshots/data-architecture.json
+
+Build a high-level map of the site's content/data model.
+
+Document relationships between:
+
+WORDPRESS CONTENT TYPE
+    ↓
+CUSTOM FIELDS
+    ↓
+TAXONOMIES
+    ↓
+RELATIONSHIPS
+    ↓
+QUERIES
+    ↓
+BRICKS TEMPLATE
+    ↓
+BRICKS ELEMENT
+    ↓
+PUBLIC FRONTEND
+
+Where relevant identify:
+
+- Pages
+- Posts
+- CPTs
+- taxonomies
+- WooCommerce products/categories
+- custom fields
+- relationships
+- global options
+- dynamic data
+- queries
+- listing systems
+- template relationships
+
+The purpose is that future Codex threads understand where data already exists
+before creating new structures.
+
+==================================================
+PHASE 4 — DESIGN SYSTEM
+==================================================
+
+Inspect the complete current Bricks design system.
+
+Document:
+
+- theme styles
+- theme-style conditions
+- global classes
+- class naming conventions
+- global variables
+- variable naming conventions
+- color palettes
+- typography
+- spacing
+- content widths
+- container widths
+- breakpoints
+- responsive cascade strategy
+- borders
+- radii
+- shadows
+- gradients
+- pseudo states/selectors
+- recurring grid/flex structures
+- common section structures
+- button systems
+- heading patterns
+- card systems
+- reusable layout conventions
+
+Create/update:
+
+docs/bricks/03-design-system.md
+docs/bricks/04-theme-styles.md
+docs/bricks/05-global-classes.md
+docs/bricks/06-global-variables.md
+docs/bricks/07-colors-typography.md
+docs/bricks/08-breakpoints.md
+
+Also save useful machine-readable snapshots.
+
+Do NOT invent a design rule because a value occurs once.
+
+Classify observations as:
+
+- EXPLICIT GLOBAL RULE
+- STRONG RECURRING CONVENTION
+- LOCAL IMPLEMENTATION
+- ONE-OFF
+- POSSIBLE INCONSISTENCY
+
+==================================================
+PHASE 5 — TEMPLATES
+==================================================
+
+Inspect every Bricks template accessible through MCP.
+
+For each template record where relevant:
+
+- ID
+- name
+- type
+- status
+- conditions
+- purpose
+- element hierarchy
+- major classes used
+- global variables used
+- components used
+- custom/plugin data used
+- query loops
+- dynamic data
+- interactions
+- element conditions
+- responsive behaviour
+- custom CSS/code
+- frontend contexts where rendered
+
+Create/update:
+
+docs/bricks/09-templates.md
+
+and where useful:
+
+docs/bricks/templates/<descriptive-template-name>.md
+
+Document routing for:
+
+- headers
+- footers
+- single templates
+- archives
+- CPT templates
+- WooCommerce templates
+- conditional templates
+
+==================================================
+PHASE 6 — ALL BRICKS PAGES
+==================================================
+
+Enumerate and inspect every accessible Bricks-built page.
+
+Do NOT stop after the homepage.
+
+For every relevant page record:
+
+- post ID
+- title
+- slug
+- public URL
+- purpose
+- page/template relationship
+- top-level element hierarchy
+- major sections
+- global classes
+- variables
+- components
+- plugin-provided dynamic data
+- custom fields used
+- theme styles
+- queries
+- query loops
+- conditions
+- interactions
+- responsive behaviour
+- local styles
+- recurring patterns
+- important exceptions
+
+Create:
+
+docs/bricks/pages/<slug>.md
+
+Do not dump thousands of raw settings.
+
+Document architecture and dependencies.
+
+==================================================
+PHASE 7 — COMPONENTS, DYNAMIC DATA, QUERIES & CODE
+==================================================
+
+Create/update:
+
+docs/bricks/10-components.md
+docs/bricks/11-dynamic-data.md
+docs/bricks/12-queries.md
+docs/bricks/13-custom-code.md
+
+Inspect where relevant:
+
+- components
+- component instances
+- global queries
+- query loops
+- dynamic tags
+- ACF dynamic data
+- JetEngine dynamic data
+- ACPT dynamic data
+- WooCommerce dynamic data
+- custom dynamic data providers
+- reusable query patterns
+- relevant CSS/JS
+- custom Bricks code structures
+
+Do NOT execute PHP.
+
+Do NOT modify code.
+
+==================================================
+PHASE 8 — WOOCOMMERCE
+==================================================
+
+WooCommerce MUST ALWAYS be checked during the bootstrap audit.
+
+Do NOT assume WooCommerce exists.
+
+FIRST determine its status.
+
+IF WooCommerce is not installed:
+    record:
+    WOOCOMMERCE: NOT INSTALLED
+
+IF installed but inactive:
+    record:
+    WOOCOMMERCE: INSTALLED / INACTIVE
+
+IF active:
+    WooCommerce becomes a REQUIRED audit area.
+
+Create/update:
+
+docs/bricks/14-woocommerce.md
+
+If active, inspect where relevant and accessible:
+
+- products
+- product categories
+- product tags
+- attributes
+- variations
+- product data architecture
+- product custom fields
+- Bricks WooCommerce templates
+- shop/archive templates
+- category templates
+- single product templates
+- cart
+- checkout
+- account pages
+- WooCommerce components/elements
+- dynamic product data
+- query loops
+- related/up-sell/cross-sell patterns
+- frontend shop design
+- responsive shop behaviour
+
+Map WooCommerce frontend rendering back to:
+
+- template
+- Bricks structure
+- classes
+- variables
+- dynamic data
+- plugin integrations
+
+Do NOT change:
+
+- products
+- prices
+- stock
+- orders
+- customers
+- checkout settings
+- payment settings
+- shipping settings
+- tax settings
+- coupons
+- WooCommerce configuration
+
+Never expose private customer/order data in documentation.
+
+==================================================
+PHASE 9 — FRONTEND VISUAL AUDIT AND DESIGN LANGUAGE
+==================================================
+
+The Bricks/MCP structure alone is NOT sufficient for understanding this site's
+visual design language.
+
+You MUST also inspect the rendered PUBLIC FRONTEND in a browser.
+
+This remains READ-ONLY.
+
+--------------------------------------------------
+9.1 — GOAL
+--------------------------------------------------
+
+Build a visual understanding of how:
+
+- Bricks
+- plugin-driven data
+- templates
+- classes
+- variables
+- layouts
+
+actually render together in the browser.
+
+The purpose is to learn enough about the site's visual language that future
+Codex tasks can design pages that feel native to the site.
+
+Use:
+
+- Bricks MCP as authority for Bricks structure/configuration
+- plugin/runtime data as authority for integration architecture
+- rendered frontend as authority for actual appearance
+
+--------------------------------------------------
+9.2 — PUBLIC PAGE INVENTORY
+--------------------------------------------------
+
+Open every relevant publicly accessible page where practical.
+
+Include representative examples of:
+
+- homepage
+- landing pages
+- main navigation destinations
+- service pages
+- CPT pages
+- category/archive pages
+- brand pages
+- articles
+- forms/contact pages
+- pages rendered by templates
+- plugin-driven frontend pages
+- WooCommerce pages when active
+- other visually distinct page types
+
+Do NOT stop after the homepage.
+
+For template-only resources, identify real frontend URLs where they render.
+
+Create/update:
+
+docs/bricks/15-frontend-visual-audit.md
+
+--------------------------------------------------
+9.3 — RESPONSIVE VISUAL INSPECTION
+--------------------------------------------------
+
+Inspect important page types at:
+
+- large desktop
+- normal desktop/laptop
+- tablet/narrow desktop
+- mobile
+
+Prefer actual Bricks breakpoints where practical.
+
+Observe:
+
+- content widths
+- section spacing
+- grid collapse
+- flex direction
+- visual ordering
+- typography scaling
+- image cropping
+- heroes
+- buttons
+- navigation
+- cards
+- gaps
+- margins
+- padding
+- alignment
+- overlaps
+- decorative elements
+- overflow
+- hidden elements
+- responsive simplification
+
+--------------------------------------------------
+9.4 — VISUAL DESIGN LANGUAGE
+--------------------------------------------------
+
+Study recurring visual patterns.
+
+Document:
+
+### Composition
+- whitespace
+- hierarchy
+- density
+- pacing
+- alignment
+- column proportions
+- section sequencing
+
+### Layout
+- heroes
+- containers
+- grids
+- cards
+- split layouts
+- CTA sections
+- image/text patterns
+- overlaps
+- backgrounds
+
+### Typography
+- hierarchy
+- line length
+- wrapping
+- paragraph width
+- labels
+- emphasis
+
+### Colour
+- backgrounds
+- accents
+- contrast
+- light/dark sequencing
+- overlays
+
+### Imagery
+- crop
+- aspect ratios
+- placement
+- contained/full-width
+- photography/graphics
+
+### UI
+- buttons
+- cards
+- navigation
+- forms
+- icons
+- badges
+- interactive patterns
+
+Describe visual personality using observable evidence.
+
+==================================================
+PHASE 10 — VISUAL PATTERN LIBRARY
+==================================================
+
+Create/update:
+
+docs/bricks/16-visual-patterns.md
+
+Identify reusable patterns such as:
+
+- homepage hero
+- standard hero
+- media/text section
+- card grid
+- feature section
+- CTA
+- article layout
+- form section
+- product layout when WooCommerce is active
+- archive/card pattern
+- navigation
+- footer
+- mobile adaptations
+
+For each pattern document:
+
+- frontend example
+- URL
+- Bricks page/template
+- classes
+- variables
+- plugin/data dependencies
+- structural implementation
+- visual purpose
+- responsive behaviour
+- reuse guidance
+
+Classify:
+
+- SITE-WIDE VISUAL RULE
+- STRONG RECURRING PATTERN
+- PAGE-TYPE PATTERN
+- ONE-OFF DESIGN
+- POSSIBLE INCONSISTENCY
+
+==================================================
+PHASE 11 — PAGE-TO-IMPLEMENTATION CORRELATION
+==================================================
+
+For important patterns correlate:
+
+VISIBLE FRONTEND
+    ↓
+WORDPRESS CONTENT TYPE
+    ↓
+PLUGIN / DATA SOURCE
+    ↓
+BRICKS TEMPLATE
+    ↓
+ELEMENT STRUCTURE
+    ↓
+GLOBAL CLASSES
+    ↓
+GLOBAL VARIABLES
+    ↓
+QUERY / DYNAMIC DATA
+    ↓
+RESPONSIVE SETTINGS
+
+The purpose is to understand BOTH what the design looks like and how it is
+implemented.
+
+==================================================
+PHASE 12 — SITE-WIDE RULES
+==================================================
+
+Create/update:
+
+docs/bricks/17-site-rules.md
+docs/bricks/18-known-patterns.md
+
+Derive rules using ALL relevant evidence:
+
+A. Bricks architecture
+B. WordPress/plugin/data architecture
+C. browser-rendered frontend
+
+Separate:
+
+1. Explicit global rules
+2. Strong recurring structural conventions
+3. Strong recurring visual conventions
+4. Data-model conventions
+5. Plugin integration conventions
+6. Page-type-specific patterns
+7. Exceptions
+8. Inconsistencies
+9. Things future agents must verify
+
+Examples:
+
+- container structure
+- section hierarchy
+- classes
+- variables
+- field/data usage
+- query patterns
+- CPT/template relationships
+- responsive patterns
+- spacing
+- typography
+- buttons
+- cards
+- heroes
+- imagery
+- WooCommerce patterns
+
+==================================================
+PHASE 13 — AUDIT FINDINGS
+==================================================
+
+Create/update:
+
+docs/bricks/19-audit-findings.md
+
+Do NOT fix anything.
+
+Document potential issues such as:
+
+- duplicate classes
+- duplicate variables
+- naming inconsistencies
+- duplicate field structures
+- overlapping CPT/data systems
+- ACF/JetEngine/ACPT duplication
+- unused-looking fields
+- unused-looking queries
+- design-system drift
+- plugin dependency concerns
+- local styles repeating global patterns
+- template overlap
+- visual inconsistency
+- responsive inconsistency
+- architecture requiring review
+
+Classify:
+
+- CONFIRMED FACT
+- LIKELY ISSUE
+- POSSIBLE ISSUE
+- RECOMMENDATION
+- NEEDS HUMAN REVIEW
+
+==================================================
+PHASE 14 — AGENTS.md
+==================================================
+
+Finally create or update the project-root:
+
+AGENTS.md
+
+Read the existing file first.
+
+Preserve useful existing instructions.
+
+Keep it concise and operational.
+
+It must establish:
+
+--------------------------------------------------
+SITE IDENTITY
+--------------------------------------------------
+
+This project belongs exclusively to the currently connected target website.
+
+Use only the MCP server assigned to this project unless explicitly instructed otherwise.
+
+--------------------------------------------------
+SOURCE OF TRUTH
+--------------------------------------------------
+
+For current Bricks structure:
+LIVE BRICKS MCP wins.
+
+For current plugin/integration architecture:
+LIVE WORDPRESS/PLUGIN STATE wins.
+
+For actual appearance:
+CURRENT RENDERED FRONTEND wins.
+
+Local docs are cached architectural references, not guaranteed current state.
+
+--------------------------------------------------
+PLUGIN-AWARE WORKFLOW
+--------------------------------------------------
+
+Before creating new:
+
+- custom fields
+- CPTs
+- taxonomies
+- relationships
+- queries
+- forms
+- WooCommerce structures
+- dynamic-data architecture
+
+inspect the existing plugin/data ecosystem first.
+
+Do not recreate functionality already provided by:
+
+- ACF
+- JetEngine
+- ACPT
+- WooCommerce
+- another existing active plugin
+- existing custom site code
+
+Prefer the established site architecture unless the user explicitly requests
+a redesign/rearchitecture.
+
+--------------------------------------------------
+BEFORE EVERY WRITE
+--------------------------------------------------
+
+1. Read AGENTS.md.
+2. Read relevant documentation.
+3. Inspect current live Bricks state.
+4. Inspect current plugin/data dependencies.
+5. Inspect relevant frontend references for visual work.
+6. Reuse existing structures where appropriate.
+7. Avoid unrelated changes.
+8. Preview/plan where possible.
+9. Commit only agreed scope.
+10. Re-read persisted state.
+11. Browser verify.
+12. Run quality-gate checks.
+13. Update documentation if architecture materially changed.
+
+--------------------------------------------------
+PERMISSION-AWARE BEHAVIOUR
+--------------------------------------------------
+
+The bootstrap audit may have used elevated admin permissions.
+
+Future work may use a restricted user.
+
+Never interpret inaccessible data as nonexistent.
+
+Use statuses:
+
+- VERIFIED LIVE
+- CACHED / PREVIOUSLY AUDITED
+- LIVE ACCESS BLOCKED
+- NOT VERIFIED
+
+Do not attempt privilege escalation automatically.
+
+--------------------------------------------------
+VISUAL DESIGN VERIFICATION
+--------------------------------------------------
+
+Bricks data alone is not sufficient for design/layout work.
+
+Use both:
+
+- architecture
+- browser-rendered visual references
+
+Always visually verify significant design work after implementation.
+
+--------------------------------------------------
+WOOCOMMERCE
+--------------------------------------------------
+
+Always determine WooCommerce status.
+
+If inactive/not installed:
+do not assume WooCommerce functionality exists.
+
+If active:
+inspect existing WooCommerce architecture before creating/changing e-commerce
+layouts or data structures.
+
+Never expose order/customer/private commerce data in project documentation.
+
+--------------------------------------------------
+SAFETY
+--------------------------------------------------
+
+Never:
+
+- execute PHP without explicit authorization
+- modify plugins
+- modify plugin files
+- activate/deactivate plugins without explicit authorization
+- install/delete/update plugins without explicit authorization
+- delete fields/CPTs/taxonomies/relationships without explicit authorization
+- delete Bricks global resources without explicit authorization
+- make unrelated site-wide changes
+
+==================================================
+GLOBAL SAFETY RULES FOR THIS BOOTSTRAP TASK
+==================================================
+
+SITE IS READ-ONLY.
+
+Local project documentation MAY be created or updated.
+
+Do NOT:
+
+- modify posts
+- modify pages
+- modify Bricks elements
+- modify templates
+- modify theme styles
+- modify classes
+- modify variables
+- modify components
+- modify queries
+- modify plugin settings
+- modify field groups
+- modify CPTs
+- modify taxonomies
+- modify relationships
+- modify WooCommerce
+- modify products
+- modify orders
+- modify customers
+- install/update/delete plugins
+- activate/deactivate plugins
+- execute PHP
+- modify themes
+- modify server files
+
+==================================================
+COMPLETION REPORT
+==================================================
+
+At completion report:
+
+- pages discovered
+- pages MCP-inspected
+- public pages browser-inspected
+- templates discovered
+- templates inspected
+- template frontend examples inspected
+- installed plugins count where discoverable
+- active plugins count where discoverable
+- architecture-relevant plugins identified
+- custom field systems detected
+- CPT systems detected
+- CPT count
+- taxonomy count
+- relationship systems detected
+- ACF status
+- JetEngine status
+- ACPT status
+- other major data plugins detected
+- WooCommerce status
+- WooCommerce resources inspected if active
+- global class count
+- global variable count
+- theme style count
+- component count
+- query count
+- major responsive visual references inspected
+- strongest visual design references
+- reusable visual patterns
+- inaccessible resources and reasons
+
+State whether audit is:
+
+COMPLETE
+
+or
+
+PARTIAL
+
+Do not report COMPLETE unless every discovered relevant resource has either:
+
+- been inspected/documented/verified
+
+OR
+
+- has an explicit documented reason why it could not be inspected.
+
+Finally:
+
+1. Summarize all local documentation created or updated.
+2. Summarize the plugin/integration architecture.
+3. Summarize the content/data architecture.
+4. Summarize the Bricks architecture.
+5. Summarize the visual-design conclusions.
+6. Summarize important inconsistencies/audit findings.
+7. Confirm that no WordPress / Bricks / plugin changes were made.
+```
