@@ -5,6 +5,9 @@ All notable changes to this starter workflow should be documented here.
 ## [Unreleased]
 
 ### Added
+- Bricks-native authoring standard covering semantic element choice, native controls, CSS ID hygiene, global class/BEM strategy, variable/token reuse, media/icon reuse, and fluid responsive authoring.
+- Read-only native-authoring review workflow for pages/templates/components.
+- Advanced Themer bundled-ACF provenance heuristic for cases where ACF runtime is available but no standalone ACF plugin appears in the standard plugin list.
 - Existing-project upgrade/reconciliation workflow validated by the first real-site migration test.
 - `STARTER-MANIFEST.json` for package/revision identity when starter files are distributed as ZIP without Git metadata.
 - Task workflow prompt suite for greenfield design-system seeding, new/existing pages, templates, plugin/data architecture, WooCommerce, and targeted re-audits.
@@ -23,6 +26,8 @@ All notable changes to this starter workflow should be documented here.
 - Setup, workflow, and security documentation.
 
 ### Changed
+- New-page, existing-page, and template workflows now require a native-authoring preflight and post-write review.
+- AGENTS skill routing now explicitly uses bricks-plan-from-brief, bricks-element-schemas, bricks-naming-conventions, bricks-media-assets, and bricks-custom-code only when appropriate.
 - Plugin/provider detection now distinguishes runtime evidence from standard plugin-list visibility and records unresolved loader provenance instead of assuming absence.
 - WooCommerce absence/status is now evidence-aware when plugin inventory is incomplete.
 - Design-system ownership can record confidence (VERIFIED / STRONG EVIDENCE / TENTATIVE / UNKNOWN).
