@@ -93,6 +93,8 @@ Track ownership/provenance for global design resources where possible:
 
 Never assume a class, variable, or token is Bricks-owned merely because it is visible inside Bricks.
 
+For important ownership claims, track confidence where useful: VERIFIED, STRONG EVIDENCE, TENTATIVE, or UNKNOWN.
+
 If an external CSS/design framework such as Core Framework or another equivalent provider owns classes, variables, tokens, spacing, typography, colors, or breakpoints:
 
 - treat that provider as the source of truth for those resources;
@@ -123,11 +125,14 @@ Do not recreate functionality already provided by an active system unless the us
 
 ## WooCommerce
 
-Always determine WooCommerce status:
+Always determine WooCommerce evidence/status. Prefer:
 
-- NOT INSTALLED
-- INSTALLED / INACTIVE
 - ACTIVE
+- INSTALLED / INACTIVE
+- NOT DETECTED
+- UNKNOWN / INVENTORY INCOMPLETE
+
+Use NOT INSTALLED only when the available plugin inventory is complete enough to prove absence.
 
 If ACTIVE:
 
@@ -150,6 +155,7 @@ When the starter repository is accessible, use the matching canonical workflow a
 - CPT/field/taxonomy/relationship/query/plugin-owned data architecture change → `prompts/30-plugin-data-architecture-change-workflow.md`
 - WooCommerce + Bricks work → `prompts/31-woocommerce-workflow.md`
 - limited read-only re-audit → `prompts/80-targeted-reaudit.md`
+- reconcile an older bootstrapped project with a newer starter → `prompts/81-existing-project-upgrade.md`
 - AGENTS/project-profile synchronization → `prompts/90-agents-maintenance-and-sync.md`
 
 If the starter repository is not currently accessible, follow the equivalent rules embedded in this AGENTS.md and the local `docs/bricks/` knowledge base rather than blocking ordinary work.
