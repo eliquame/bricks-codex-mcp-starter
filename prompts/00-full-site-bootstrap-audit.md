@@ -84,7 +84,7 @@ It is a:
 DOCUMENTATION STRUCTURE
 ==================================================
 
-Use the following structure where appropriate:
+Use the starter repository's `templates/documentation-structure.md` as the current structural reference, and use the following structure where appropriate:
 
 docs/bricks/
     00-audit-progress.md
@@ -153,11 +153,15 @@ Do not create empty documents merely to satisfy the structure.
 PHASE 0 — AUDIT PROGRESS AND RESUMABILITY
 ==================================================
 
-Before performing the full audit, create:
+Before performing the full audit, create/update:
 
 docs/bricks/00-audit-progress.md
 
-This file must act as the persistent checklist for the entire bootstrap audit.
+Use the starter repository's `templates/audit-progress.template.md` as the baseline structure, then extend it when the target site requires additional audit categories.
+
+Do not overwrite or confuse the separate `docs/bricks/00-bootstrap-status.md`, which tracks setup/orchestration rather than site-discovery coverage.
+
+`00-audit-progress.md` must act as the persistent checklist for the entire site audit.
 
 Track discovered resources using statuses such as:
 
