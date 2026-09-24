@@ -241,6 +241,12 @@ Normál esetben csak mondd el Codexnek természetes nyelven a feladatot, példá
 
 A projekt `AGENTS.md` automatikusan a megfelelő workflow-hoz irányítja a Codexet. A `prompts/` fájlok a részletes, kanonikus munkafolyamatok; a usernek általában nem kell őket kézzel kiválasztania.
 
+## Régebbi starterrel készült projekt frissítése
+
+Ha egy meglévő Codex projektet egy korábbi starter verzióval auditáltál, ne futtasd vakon újra a teljes bootstrapot. Használd az `prompts/81-existing-project-upgrade.md` reconciliation workflow-t: megtartja a site-specifikus tudást, normalizálja az AGENTS/docs struktúrát, és csak célzottan ellenőrzi újra a hiányzó vagy elavult részeket.
+
+ZIP-ből átadott starter esetén a `STARTER-MANIFEST.json` ad csomagazonosítót/revíziót akkor is, ha Git commit SHA nem érhető el.
+
 ## Ha kézzel akarod beállítani
 
 A manuális dokumentáció megmarad referenciának:
@@ -287,11 +293,17 @@ prompts/31-woocommerce-workflow.md
 prompts/80-targeted-reaudit.md
     scoped read-only re-audit after material changes
 
+prompts/81-existing-project-upgrade.md
+    reconcile an older bootstrapped project with the current starter
+
 prompts/90-agents-maintenance-and-sync.md
     later AGENTS synchronization after material changes
 
 prompts/README.md
     prompt catalog and numbering convention
+
+STARTER-MANIFEST.json
+    starter package identity/revision when Git commit metadata is unavailable (for example ZIP distribution)
 
 templates/documentation-structure.md
     reference for the generated knowledge base
@@ -395,6 +407,12 @@ The bootstrap also determines design-system authority:
 - **UNKNOWN / UNDEFINED**
 
 WooCommerce is always detected and deeply audited only when relevant/active.
+
+## Upgrading an older bootstrapped project
+
+Use `prompts/81-existing-project-upgrade.md` instead of blindly rerunning the full bootstrap. It preserves site-specific knowledge and performs targeted reconciliation/gap checks.
+
+When the starter is distributed as ZIP and Git commit metadata is unavailable, `STARTER-MANIFEST.json` provides package identity and content revision.
 
 ## Normal day-to-day use
 
