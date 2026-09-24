@@ -21,6 +21,13 @@ DISCOVERY
    - verify that an approved design-system direction exists;
    - if not, stop and recommend/use the greenfield design-system seed workflow first.
 7. Identify any dynamic-data, CPT, taxonomy, query, form, WooCommerce or framework dependencies.
+8. Run an authoring preflight:
+   - use bricks-plan-from-brief for broad/document-driven builds;
+   - map semantic content patterns to the most appropriate Bricks elements;
+   - use bricks-element-schemas for unfamiliar/complex elements and controls;
+   - inspect existing media/custom icons before inventing/uploading assets;
+   - inspect existing global classes/variables before new shared resources;
+   - identify whether any requested styling can be expressed with native Bricks controls instead of custom CSS.
 
 PLAN
 
@@ -32,7 +39,10 @@ Before writing, present a concise implementation plan covering:
 - new global resources, if any;
 - dynamic-data/query dependencies;
 - responsive behavior;
-- visual references used.
+- visual references used;
+- native element choices for structured content (lists, accordions, tabs, forms, media, etc.);
+- any custom CSS/code that may be required and why native controls are insufficient;
+- responsive strategy, including whether fluid/intrinsic values can avoid unnecessary breakpoint patches.
 
 Avoid introducing new global resources unless existing ones are insufficient.
 
@@ -44,7 +54,10 @@ After approval:
 - preserve provider ownership;
 - use preview/dry-run/planning abilities where available;
 - keep the implementation Bricks-native unless the project architecture requires another owner/provider layer;
-- do not modify unrelated templates/settings/resources.
+- do not modify unrelated templates/settings/resources;
+- do not use class-like names in CSS ID fields;
+- use custom CSS only when no suitable Bricks control/class/variable/selector path exists;
+- prefer existing/native List/Icon List/etc. over generic repeated Basic Text structures when semantically appropriate.
 
 VERIFY
 
@@ -54,7 +67,14 @@ After writing:
 3. verify relevant desktop/tablet/mobile widths;
 4. verify important interactions/conditions;
 5. run the relevant Bricks quality gate;
-6. check for unexpected global/cascade effects.
+6. check for unexpected global/cascade effects;
+7. run the Bricks-native authoring review:
+   - missed native elements;
+   - unnecessary custom CSS;
+   - CSS ID misuse;
+   - missed global class/variable reuse;
+   - brittle magic values/breakpoint patch chains;
+   - missed media/icon reuse.
 
 DOCUMENT
 
@@ -72,5 +92,7 @@ Report:
 - responsive verification;
 - frontend verification;
 - documentation updated;
-- unresolved issues.
+- unresolved issues;
+- custom CSS/code used and justification;
+- native-authoring review findings/fixes.
 ```
