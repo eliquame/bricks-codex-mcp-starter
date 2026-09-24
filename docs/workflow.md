@@ -10,20 +10,27 @@ Each site should use a unique MCP server name.
 
 A website should normally map to one local Codex project.
 
-Example:
+Before the first thread, copy the contents of `project-starter/` from this repository into the new project root.
+
+Initial structure:
 
 ```text
 my-site-bricks/
 ├── AGENTS.md
 └── docs/
     └── bricks/
+        └── README.md
 ```
+
+The project-root `AGENTS.md` is the canonical baseline policy and must be active from the first task. It is not generated from scratch by the bootstrap audit.
 
 Use separate Codex threads for separate pages, features, or workstreams.
 
 ## 3. Run the bootstrap audit
 
 Run `prompts/00-full-site-bootstrap-audit.md` in a fresh thread.
+
+The audit refines the existing AGENTS project profile with verified site-specific facts and expands `docs/bricks/` into the durable site knowledge base.
 
 The audit first classifies site maturity (ESTABLISHED, PARTIAL / IN PROGRESS, or GREENFIELD) and design-system authority (Bricks-native, external framework, hybrid, custom-code-driven, or undefined).
 
@@ -92,3 +99,10 @@ Use targeted re-audits when:
 - CPT/field/query architecture changes;
 - WooCommerce architecture changes;
 - a large redesign is completed.
+
+
+## 8. Maintain AGENTS.md
+
+Do not recreate AGENTS.md for routine tasks.
+
+Use `prompts/90-agents-maintenance-and-sync.md` only after a material project change, re-audit, permission-model change, or other event that makes the site-specific project profile/routing stale.
