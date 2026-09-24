@@ -1,9 +1,11 @@
 {
   "package": "bricks-codex-mcp-starter",
   "schema_version": 1,
-  "content_revision": "2026-09-24.3",
+  "content_revision": "2026-09-24.4",
   "channel": "development",
   "repository": "eliquame/bricks-codex-mcp-starter",
   "purpose": "Identify starter package lineage when Git commit metadata is unavailable, for example when distributed as ZIP.",
-  "maintenance": "Bump content_revision whenever starter semantics, file layout, or canonical workflows materially change."
+  "maintenance": "Bump content_revision whenever starter semantics, file layout, or canonical workflows materially change.",
+  "version": "0.1.0",
+  "release_status": "pre-1.0"
 }
