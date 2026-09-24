@@ -1,40 +1,73 @@
 # Generic Bricks + Codex MCP Workflow
 
-## 1. Connect the site
-
-Configure Bricks AI abilities and the WordPress MCP Adapter on the target site. Create a dedicated WordPress user and Application Password, then add that site's MCP server block to the local Codex configuration.
-
-Each site should use a unique MCP server name.
-
-## 2. Create one Codex project per website
+## 1. Open one Codex project per website
 
 A website should normally map to one local Codex project.
 
-Before the first thread, copy the contents of `project-starter/` from this repository into the new project root.
+The normal user flow does **not** require manually creating AGENTS/docs files.
 
-Initial structure:
+Paste the root README bootstrap prompt into a new Codex chat. Codex reads `START-HERE.md` and initializes the current project itself.
+
+## 2. Establish the Bricks MCP connection
+
+The automated setup checks whether the intended Bricks MCP server is already loaded.
+
+If not, it guides the required WordPress admin actions:
+
+- enable Bricks abilities;
+- install/activate the WordPress MCP Adapter;
+- create/select a dedicated WordPress user;
+- generate an Application Password;
+- use the Bricks Codex **Paste config** block;
+- merge that block into the existing Codex `config.toml`.
+
+Credential-bearing config stays local and should not be pasted into chat.
+
+Each site should use a unique MCP server name.
+
+## 3. Initialize the project policy
+
+Codex creates or merges project-root `AGENTS.md` from:
 
 ```text
-my-site-bricks/
-├── AGENTS.md
-└── docs/
-    └── bricks/
-        └── README.md
+project-starter/AGENTS.md
 ```
 
-The project-root `AGENTS.md` is the canonical baseline policy and must be active from the first task. It is not generated from scratch by the bootstrap audit.
+It also initializes `docs/bricks/` and a persistent bootstrap status file.
 
-Use separate Codex threads for separate pages, features, or workstreams.
+If MCP or skill loading requires a new chat/restart, resume from:
 
-## 3. Run the bootstrap audit
+```text
+docs/bricks/00-bootstrap-status.md
+```
 
-Run `prompts/00-full-site-bootstrap-audit.md` in a fresh thread.
+## 4. Install or verify Bricks skills
 
-The audit refines the existing AGENTS project profile with verified site-specific facts and expands `docs/bricks/` into the durable site knowledge base.
+Get the MCP connection working first.
 
-The audit first classifies site maturity (ESTABLISHED, PARTIAL / IN PROGRESS, or GREENFIELD) and design-system authority (Bricks-native, external framework, hybrid, custom-code-driven, or undefined).
+Then verify that client-side `bricks-` skills are loaded.
 
-The audit should build a persistent site-specific knowledge base covering:
+If not, follow the current Codex-compatible installation method from:
+
+https://github.com/codeerhq/bricks-skills
+
+Skills provide workflow guidance; they do not grant WordPress permissions.
+
+## 5. Run the full bootstrap audit
+
+Execute the starter repository's:
+
+```text
+prompts/00-full-site-bootstrap-audit.md
+```
+
+The audit first classifies:
+
+- SITE_MATURITY: ESTABLISHED / PARTIAL / GREENFIELD;
+- DESIGN_SYSTEM_STATE;
+- DESIGN_SYSTEM_AUTHORITY.
+
+It then builds the site-specific knowledge base covering, where relevant:
 
 - plugin and integration ecosystem;
 - data architecture;
@@ -44,65 +77,69 @@ The audit should build a persistent site-specific knowledge base covering:
 - components;
 - dynamic data;
 - queries;
-- WooCommerce when active;
-- rendered frontend and responsive visual patterns when meaningful public references exist;
-- design-system ownership/provenance, including external CSS frameworks when present;
+- WooCommerce;
+- rendered frontend and responsive visual patterns;
+- external CSS/design-system providers;
 - site-wide conventions and known exceptions.
 
-For GREENFIELD projects, the audit must not invent a visual language from missing evidence. A separate design-system creation/seed workflow should precede broad page design.
+For GREENFIELD projects, the audit must not invent a visual language from missing evidence.
 
-## 4. Reduce permissions
+## 6. Reduce permissions after bootstrap
 
-After the initial full audit, reduce the MCP user's WordPress and Bricks permissions to the minimum needed for normal editing.
+A full read-only audit may need broader access than routine editing.
 
-The generated project documentation remains useful, but it is cached knowledge. Future writes must re-read the affected live resources.
+After the initial audit, reduce the MCP user's WordPress and Bricks permissions to the minimum needed for normal work.
 
-## 5. Work in scoped threads
+The generated documentation remains useful, but it is cached knowledge. Future writes must re-read affected live resources.
+
+## 7. Work in scoped threads
 
 For a specific task:
 
-1. read the project `AGENTS.md`;
-2. read only the relevant documentation;
-3. re-read the affected live MCP resources;
-4. inspect relevant browser references for visual work;
-5. plan the smallest safe change;
-6. write only the agreed scope;
-7. re-read persisted state;
-8. verify the rendered frontend;
-9. update local documentation when the architecture or design rules materially changed.
+1. read project `AGENTS.md`;
+2. read only relevant documentation;
+3. re-read affected live MCP resources;
+4. inspect plugin/data/design-system ownership where relevant;
+5. inspect browser references for visual work;
+6. plan the smallest safe change;
+7. write only the agreed scope;
+8. re-read persisted state;
+9. verify rendered frontend where appropriate;
+10. update only documentation made stale by the change.
 
-## 6. Handle global design-system changes
+## 8. Handle global design-system changes
 
-Treat Theme Styles, global classes, global variables, and external framework tokens/classes as global-impact resources.
+Theme Styles, global classes, global variables, breakpoints, and external framework tokens/classes are global-impact resources.
 
-For global changes:
+Use:
 
-1. verify which system owns the resource;
-2. identify representative affected pages/templates;
-3. capture relevant pre-change state where practical;
-4. make the scoped change;
-5. re-read persisted state;
-6. browser-verify representative pages at relevant viewport widths;
-7. refresh affected documentation and snapshots.
+```text
+prompts/10-design-system-change-workflow.md
+```
 
-Use `prompts/02-design-system-change-workflow.md` for this class of task.
+The workflow verifies ownership, blast radius, persisted state, representative frontend output, and documentation updates.
 
-## 7. Re-audit when needed
+## 9. Re-audit when needed
 
 Do not rerun the entire bootstrap audit after every change.
 
 Use targeted re-audits when:
 
 - a major plugin is added/removed;
-- the design system changes;
+- design-system ownership or global resources materially change;
 - template routing changes;
 - CPT/field/query architecture changes;
 - WooCommerce architecture changes;
 - a large redesign is completed.
 
-
-## 8. Maintain AGENTS.md
+## 10. Maintain AGENTS.md
 
 Do not recreate AGENTS.md for routine tasks.
 
-Use `prompts/90-agents-maintenance-and-sync.md` only after a material project change, re-audit, permission-model change, or other event that makes the site-specific project profile/routing stale.
+Use:
+
+```text
+prompts/90-agents-maintenance-and-sync.md
+```
+
+only after material project evolution makes the site-specific project profile or routing stale.
