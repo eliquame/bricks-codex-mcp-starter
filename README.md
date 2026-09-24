@@ -17,11 +17,13 @@ A starter segítségével a Codex egy új webhelyen:
 - végigvizsgálja az oldalakat és template-eket;
 - böngészőben is ellenőrzi a publikus frontend tényleges vizuális megjelenését és reszponzív működését;
 - külön vizsgálja a WooCommerce-t, ha telepítve és aktív;
-- tartós, site-specifikus tudásbázist és `AGENTS.md`-t hoz létre a konkrét Codex projektben.
+- tartós, site-specifikus tudásbázist épít, és a projekt gyökerében lévő alapértelmezett `AGENTS.md`-t ellenőrzött site-specifikus adatokkal egészíti ki.
 
 ### Fontos elv
 
-Ez a repository **nem egy konkrét webhely dokumentációja**. A benne lévő promptok és template-ek site-agnosztikusak.
+Ez a repository **nem egy konkrét webhely dokumentációja**. A benne lévő promptok és starter fájlok site-agnosztikusak.
+
+A **kanonikus kezdő AGENTS fájl** a `project-starter/AGENTS.md`. Ezt kell minden új site projekt gyökerébe bemásolni. A `templates/` mappa dokumentációs sablonokat tartalmaz; nem ott van az aktív projektutasítás.
 
 ### Webhely-érettségi módok
 
@@ -76,18 +78,23 @@ bricks-codex-mcp-starter/
 ├── README.md
 ├── CHANGELOG.md
 ├── .gitignore
+├── project-starter/
+│   ├── AGENTS.md
+│   ├── README.md
+│   └── docs/bricks/README.md
 ├── prompts/
 │   ├── 00-full-site-bootstrap-audit.md
-│   ├── 01-agents-md-refresh.md
-│   └── 02-design-system-change-workflow.md
+│   ├── 02-design-system-change-workflow.md
+│   └── 90-agents-maintenance-and-sync.md
 ├── templates/
-│   ├── AGENTS.template.md
-│   └── audit-progress.template.md
+│   ├── audit-progress.template.md
+│   └── documentation-structure.md
 └── docs/
     ├── setup-bricks-mcp.md
     ├── setup-codex.md
     ├── security.md
-    └── workflow.md
+    ├── workflow.md
+    └── design-system-lifecycle.md
 ```
 
 ### Kezdés
@@ -95,9 +102,11 @@ bricks-codex-mcp-starter/
 1. Kösd össze az adott WordPress / Bricks webhelyet a Codexszel MCP-n keresztül.
 2. Telepítsd a Bricks skills csomagot a Codexhez.
 3. Hozz létre külön helyi Codex projektmappát a webhelynek.
-4. Futtasd a `prompts/00-full-site-bootstrap-audit.md` promptot egy új Codex threadben.
-5. Az audit után csökkentsd az MCP user jogosultságait a napi munkához szükséges minimumra.
-6. A későbbi threadek mindig a létrehozott `AGENTS.md` és `docs/bricks/` tudásbázisból induljanak, de írás előtt ellenőrizzék újra az érintett live állapotot.
+4. **Még az első thread előtt** másold a `project-starter/` tartalmát a projekt gyökerébe. Így a Codex már az első feladattól egy részletes, általános `AGENTS.md` szabályrendszerrel indul.
+5. Futtasd a `prompts/00-full-site-bootstrap-audit.md` promptot egy új Codex threadben. Az audit nem nulláról ír új AGENTS fájlt: kitölti/refine-olja a projektprofilt és létrehozza a site-specifikus `docs/bricks/` tudásbázist.
+6. Az audit után csökkentsd az MCP user jogosultságait a napi munkához szükséges minimumra.
+7. A későbbi threadek mindig az aktív projektgyökér `AGENTS.md` és `docs/bricks/` tudásbázisból induljanak, de írás előtt ellenőrizzék újra az érintett live állapotot.
+8. Az `AGENTS.md` későbbi karbantartására a `prompts/90-agents-maintenance-and-sync.md` használható.
 
 ### Biztonság
 
@@ -124,11 +133,13 @@ With this starter, Codex can:
 - inspect pages and templates;
 - inspect the rendered public frontend in a browser to understand real visual composition and responsive behavior;
 - audit WooCommerce when it is installed and active;
-- create a durable site-specific knowledge base and project `AGENTS.md`.
+- create a durable site-specific knowledge base and refine the default project-root `AGENTS.md` with verified site-specific facts.
 
 ### Core principle
 
-This repository is **not site-specific documentation**. All prompts and templates here are site-agnostic.
+This repository is **not site-specific documentation**. All prompts and starter files here are site-agnostic.
+
+The **canonical starting AGENTS file** is `project-starter/AGENTS.md`. Copy it to the root of every new site project. The `templates/` directory is for documentation templates; it is not the active project instruction location.
 
 ### Site maturity modes
 
@@ -172,18 +183,23 @@ bricks-codex-mcp-starter/
 ├── README.md
 ├── CHANGELOG.md
 ├── .gitignore
+├── project-starter/
+│   ├── AGENTS.md
+│   ├── README.md
+│   └── docs/bricks/README.md
 ├── prompts/
 │   ├── 00-full-site-bootstrap-audit.md
-│   ├── 01-agents-md-refresh.md
-│   └── 02-design-system-change-workflow.md
+│   ├── 02-design-system-change-workflow.md
+│   └── 90-agents-maintenance-and-sync.md
 ├── templates/
-│   ├── AGENTS.template.md
-│   └── audit-progress.template.md
+│   ├── audit-progress.template.md
+│   └── documentation-structure.md
 └── docs/
     ├── setup-bricks-mcp.md
     ├── setup-codex.md
     ├── security.md
-    └── workflow.md
+    ├── workflow.md
+    └── design-system-lifecycle.md
 ```
 
 ### Getting started
@@ -191,9 +207,11 @@ bricks-codex-mcp-starter/
 1. Connect the target WordPress / Bricks site to Codex through MCP.
 2. Install the Bricks skills for Codex.
 3. Create a dedicated local Codex project folder for the target site.
-4. Run `prompts/00-full-site-bootstrap-audit.md` in a new Codex thread.
-5. After the bootstrap audit, reduce the MCP user's permissions to the minimum required for normal work.
-6. Future threads should use the generated `AGENTS.md` and `docs/bricks/` knowledge base, while re-reading affected live resources before writes.
+4. **Before the first thread**, copy the contents of `project-starter/` into the project root. This gives Codex the full baseline `AGENTS.md` policy from the first task.
+5. Run `prompts/00-full-site-bootstrap-audit.md` in a new Codex thread. The audit refines the existing AGENTS project profile and builds the site-specific `docs/bricks/` knowledge base.
+6. After the bootstrap audit, reduce the MCP user's permissions to the minimum required for normal work.
+7. Future threads should use the active project-root `AGENTS.md` and `docs/bricks/` knowledge base, while re-reading affected live resources before writes.
+8. Use `prompts/90-agents-maintenance-and-sync.md` later when the active AGENTS file needs synchronization after material project changes.
 
 ### Security
 
