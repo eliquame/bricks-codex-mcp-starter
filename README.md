@@ -1,193 +1,429 @@
 # Bricks + Codex MCP Starter
 
-## Magyar
+Reusable starter kit for connecting **Bricks Builder + WordPress MCP + Codex**, initializing a safe Codex project, auditing an existing site, and maintaining a durable site-specific knowledge base.
 
-Ez a privát repository egy újrahasználható kezdőcsomag **Bricks Builder + WordPress MCP + Codex** projektekhez.
+> **Status:** evolving working draft. Bricks AI abilities are currently experimental. The Bricks documentation recommends first testing on local/staging environments.
 
-A célja, hogy egy új Bricks webhely Codexhez kapcsolása után ne minden projektben nulláról kelljen kialakítani a munkafolyamatot. A repository általános bootstrap promptokat, audit-szabályokat, `AGENTS.md` mintákat, biztonsági elveket és dokumentációs struktúrát tartalmaz.
+---
 
-### Mire szolgál?
+# Magyar
 
-A starter segítségével a Codex egy új webhelyen:
+## Mi ez?
 
-- feltérképezi a WordPress / Bricks architektúrát;
-- ellenőrzi a releváns plugin- és integrációs környezetet;
-- feltérképezi az adatmodellt (CPT-k, taxonómiák, mezők, kapcsolatok, query-k);
-- dokumentálja a Bricks design systemet, theme style-okat, classokat, változókat és breakpointokat;
-- végigvizsgálja az oldalakat és template-eket;
-- böngészőben is ellenőrzi a publikus frontend tényleges vizuális megjelenését és reszponzív működését;
-- külön vizsgálja a WooCommerce-t, ha telepítve és aktív;
-- tartós, site-specifikus tudásbázist épít, és a projekt gyökerében lévő alapértelmezett `AGENTS.md`-t ellenőrzött site-specifikus adatokkal egészíti ki.
+Ez a repository egy általános, site-agnosztikus kezdőcsomag Bricks Builder + Codex projektekhez.
 
-### Fontos elv
+Nem egy konkrét webhely dokumentációját tartalmazza. Ehelyett olyan:
 
-Ez a repository **nem egy konkrét webhely dokumentációja**. A benne lévő promptok és starter fájlok site-agnosztikusak.
+- setup wizardot;
+- alapértelmezett `AGENTS.md`-t;
+- bootstrap audit promptot;
+- design-system workflow-kat;
+- dokumentációs sablonokat;
+- biztonsági és jogosultsági szabályokat
 
-A **kanonikus kezdő AGENTS fájl** a `project-starter/AGENTS.md`. Ezt kell minden új site projekt gyökerébe bemásolni. A `templates/` mappa dokumentációs sablonokat tartalmaz; nem ott van az aktív projektutasítás.
+ad, amelyeket minden új Bricks projektnél újra lehet használni.
 
-### Webhely-érettségi módok
+A cél az, hogy egy új Bricks site-nál ne kelljen minden alkalommal nulláról kitalálni:
 
-A bootstrap audit nem feltételezi, hogy a webhely már kész vagy publikus. Először besorolja a projektet:
+- hogyan kapcsolódjon a Codex az MCP-hez;
+- milyen biztonsági szabályokkal dolgozzon;
+- hogyan térképezze fel a site-ot;
+- hogyan tanulja meg a design systemet;
+- hogyan kezelje az ACF / JetEngine / ACPT / WooCommerce / CSS framework integrációkat;
+- hogyan használja a publikus frontend vizuális mintáit;
+- és hogyan tartsa naprakészen a saját projekt-dokumentációját.
 
-- **ESTABLISHED** — működő, tartalmilag és vizuálisan kialakult webhely. A teljes publikus frontend- és vizuális audit kötelező.
-- **PARTIAL / IN PROGRESS** — vannak használható oldalak vagy designminták, de a rendszer még nem teljes. A Codex csak a ténylegesen megfigyelt mintákat tekintheti szabálynak.
-- **GREENFIELD** — szűz vagy lényegében üres WordPress / Bricks projekt. Ilyenkor nincs értelme nem létező vizuális szabályokat „kitalálni” a bootstrap auditban; a vizuális audit korlátozott vagy N/A, és a design system létrehozása külön, jóváhagyott munkafolyamat.
+## A rendszer felépítése
 
-### Design system forrása és tulajdonjoga
+```mermaid
+flowchart LR
+    A[WordPress + Bricks] --> B[WordPress MCP Adapter]
+    B --> C[Codex config.toml]
+    C --> D[Codex MCP connection]
+    D --> E[Bricks skills]
+    E --> F[Site-specific Codex project]
+    F --> G[AGENTS.md]
+    F --> H[docs/bricks knowledge base]
+    G --> I[Normal Codex work]
+    H --> I
+```
 
-A design system nem feltétlenül Bricks Theme Stylesból származik. A bootstrap auditnak meg kell állapítania, hogy a rendszer:
+A Bricks kapcsolat három külön rétegből áll:
 
-- **BRICKS NATIVE**
-- **EXTERNAL FRAMEWORK**
-- **HYBRID**
-- **CUSTOM CODE DRIVEN**
-- **UNDEFINED / PARTIAL**
+1. **WordPress MCP Adapter** — biztosítja az MCP endpointot.
+2. **Bricks abilities** — a Bricks műveleteket teszik elérhetővé.
+3. **Bricks skills** — kliensoldali munkafolyamat-szabályok; nem adnak plusz jogosultságot.
 
-Például ha egy CSS framework plugin — például Core Framework vagy más hasonló rendszer — adja a tokeneket, global classokat és variable-öket, akkor ezeket framework-owned erőforrásként kell dokumentálni. A Codex ne hozzon létre Bricksben felesleges duplikátumokat, és ne kezelje a framework által birtokolt erőforrásokat Bricks-native elemként.
+Hivatalos Bricks dokumentáció:  
+https://academy.bricksbuilder.io/builder/features/ai-abilities-and-skills/
 
-### Design system változások
+---
 
-Theme Styles, global classok, variable-ök vagy külső framework tokenek módosítása **globális hatású változásnak** számít. Ilyenkor célzott impact audit szükséges:
+## Gyors kezdés — ajánlott módszer
 
-1. aktuális állapot és ownership ellenőrzése;
-2. érintett oldalak/template-ek azonosítása;
-3. módosítás;
-4. persisted state visszaolvasása;
-5. reprezentatív frontend/regression ellenőrzés több viewporton;
-6. site dokumentáció és snapshotok frissítése.
+### 1. Hozz létre egy site-specifikus Codex projektet
 
-A részletes szabályokat a `docs/design-system-lifecycle.md`, a végrehajtási promptot pedig a `prompts/02-design-system-change-workflow.md` tartalmazza.
+Egy webhely = egy külön Codex project.
 
-Minden konkrét webhely külön Codex projektet kap, például:
+Példa:
 
 ```text
 Projects/
 ├── client-a-bricks/
-│   ├── AGENTS.md
-│   └── docs/bricks/
 ├── client-b-bricks/
-│   ├── AGENTS.md
-│   └── docs/bricks/
-└── ...
+└── shop-example-bricks/
 ```
 
-### Repository struktúra
+### 2. Másold be a starter fájlokat
+
+Még az első site-specifikus Codex thread előtt másold a `project-starter/` tartalmát az új projekt gyökerébe.
+
+Ebből:
 
 ```text
-bricks-codex-mcp-starter/
-├── README.md
-├── CHANGELOG.md
-├── .gitignore
-├── project-starter/
-│   ├── AGENTS.md
-│   ├── README.md
-│   └── docs/bricks/README.md
-├── prompts/
-│   ├── 00-full-site-bootstrap-audit.md
-│   ├── 02-design-system-change-workflow.md
-│   └── 90-agents-maintenance-and-sync.md
-├── templates/
-│   ├── audit-progress.template.md
-│   └── documentation-structure.md
+project-starter/
+├── AGENTS.md
 └── docs/
-    ├── setup-bricks-mcp.md
-    ├── setup-codex.md
-    ├── security.md
-    ├── workflow.md
-    └── design-system-lifecycle.md
+    └── bricks/
+        └── README.md
 ```
 
-### Kezdés
+ez lesz:
 
-1. Kösd össze az adott WordPress / Bricks webhelyet a Codexszel MCP-n keresztül.
-2. Telepítsd a Bricks skills csomagot a Codexhez.
-3. Hozz létre külön helyi Codex projektmappát a webhelynek.
-4. **Még az első thread előtt** másold a `project-starter/` tartalmát a projekt gyökerébe. Így a Codex már az első feladattól egy részletes, általános `AGENTS.md` szabályrendszerrel indul.
-5. Futtasd a `prompts/00-full-site-bootstrap-audit.md` promptot egy új Codex threadben. Az audit nem nulláról ír új AGENTS fájlt: kitölti/refine-olja a projektprofilt és létrehozza a site-specifikus `docs/bricks/` tudásbázist.
-6. Az audit után csökkentsd az MCP user jogosultságait a napi munkához szükséges minimumra.
-7. A későbbi threadek mindig az aktív projektgyökér `AGENTS.md` és `docs/bricks/` tudásbázisból induljanak, de írás előtt ellenőrizzék újra az érintett live állapotot.
-8. Az `AGENTS.md` későbbi karbantartására a `prompts/90-agents-maintenance-and-sync.md` használható.
+```text
+my-site-bricks/
+├── AGENTS.md
+└── docs/
+    └── bricks/
+        └── README.md
+```
 
-### Biztonság
+A `project-starter/AGENTS.md` a **kanonikus alapértelmezett projekt-szabályzat**.
 
-**Soha ne commitolj WordPress Application Passwordöt, Codex `config.toml` fájlt, API kulcsot, jelszót vagy más credentialt ebbe a repositoryba.**
+### 3. Használd a Codex setup wizardot
 
-A repository privát státusza nem helyettesíti a secret hygiene-t.
+A legegyszerűbb indulási mód:
+
+**[Nyisd meg: COPY-TO-CODEX-SETUP-WIZARD.md](prompts/COPY-TO-CODEX-SETUP-WIZARD.md)**
+
+Másold ki a fájlban lévő teljes promptot, és illeszd be egy új Codex chatbe.
+
+A wizard:
+
+- felismeri az operációs rendszert;
+- megkeresi a Codex `config.toml` fájlt;
+- végigvezet a Bricks MCP Adapter telepítésén;
+- végigvezet a credential létrehozásán;
+- **nem kéri, hogy a jelszót bemásold a chatbe**;
+- megmutatja, hová kell a Bricks által generált config blokkot beilleszteni;
+- ellenőrzi az MCP kapcsolatot;
+- telepíti / ellenőrzi a Bricks skills csomagot;
+- ellenőrzi a site project `AGENTS.md` fájlját;
+- és a végén jelzi, hogy indulhat-e a bootstrap audit.
+
+### 4. Futtasd a bootstrap auditot
+
+Ha az MCP és a skills működik:
+
+**[Full Site Bootstrap Audit](prompts/00-full-site-bootstrap-audit.md)**
+
+Ezt egy új Codex threadben futtasd.
+
+A bootstrap audit:
+
+- read-only módon feltérképezi a WordPress / Bricks architektúrát;
+- plugin- és data architecture auditot végez;
+- felismeri az ACF, JetEngine, ACPT, Meta Box stb. rendszereket;
+- minden esetben ellenőrzi a WooCommerce státuszát;
+- dokumentálja a Theme Styles / global classes / variables / breakpointokat;
+- felismeri a külső CSS framework / design-system providereket;
+- végigvizsgálja a Bricks oldalakat és template-eket;
+- meglévő site esetén böngészőben is feltérképezi a publikus frontend vizuális rendszerét;
+- létrehozza a `docs/bricks/` knowledge base-t;
+- és a starter `AGENTS.md` project profile részét ellenőrzött site-specifikus adatokkal egészíti ki.
 
 ---
 
-## English
+## Manuális MCP összekötés
 
-This private repository is a reusable starter kit for **Bricks Builder + WordPress MCP + Codex** projects.
+Ha nem használod a setup wizardot, az alábbi folyamatot kövesd.
 
-Its purpose is to avoid rebuilding the same workflow from scratch for every Bricks site. It contains generic bootstrap prompts, audit rules, `AGENTS.md` templates, security guidance, and a durable documentation structure.
+### Előfeltételek
 
-### What does it do?
+- WordPress és Bricks olyan verzióval, amely támogatja a Bricks AI abilities rendszert;
+- Codex app / CLI;
+- működő `npx` környezet a Bricks által generált remote MCP wrapperhez;
+- lehetőleg local vagy staging környezet az első teszthez.
 
-With this starter, Codex can:
+### 1. Bricks abilities
 
-- map the WordPress / Bricks architecture;
-- inspect the relevant plugin and integration ecosystem;
-- map the data model (CPTs, taxonomies, fields, relationships, queries);
-- document the Bricks design system, theme styles, classes, variables, and breakpoints;
-- inspect pages and templates;
-- inspect the rendered public frontend in a browser to understand real visual composition and responsive behavior;
-- audit WooCommerce when it is installed and active;
-- create a durable site-specific knowledge base and refine the default project-root `AGENTS.md` with verified site-specific facts.
+WordPress admin:
 
-### Core principle
+```text
+Bricks → AI → Configuration
+```
 
-This repository is **not site-specific documentation**. All prompts and starter files here are site-agnostic.
+Kapcsold be a **Bricks abilities** funkciót.
 
-The **canonical starting AGENTS file** is `project-starter/AGENTS.md`. Copy it to the root of every new site project. The `templates/` directory is for documentation templates; it is not the active project instruction location.
+Ha a WordPress MCP Adapter nincs telepítve:
 
-### Site maturity modes
+- Install plugin
+- Activate plugin
 
-The bootstrap audit does not assume that the site is already complete or publicly established. It first classifies the project:
+A Bricks oldalon az MCP státusz legyen **Connected**.
 
-- **ESTABLISHED** — a functioning site with meaningful content and visual patterns. Full public frontend and visual auditing is required.
-- **PARTIAL / IN PROGRESS** — some usable pages or design patterns exist, but the system is incomplete. Codex may only promote actually observed patterns to rules.
-- **GREENFIELD** — a blank or effectively empty WordPress / Bricks project. The bootstrap audit must not invent visual rules from missing evidence; frontend visual auditing is limited or N/A, and design-system creation becomes a separate approved workflow.
+### 2. Külön WordPress user
 
-### Design-system source and ownership
+Ajánlott külön WordPress felhasználót használni a Codexhez.
 
-The design system does not have to originate from Bricks Theme Styles. The bootstrap audit must determine whether the project is:
+A kapcsolat minden hívása ennek a felhasználónak a jogosultságaival fut.
+
+A WordPress capability-k, Bricks Builder Access és Bricks permissionök továbbra is érvényesek.
+
+> Egy teljes bootstrap audit több olvasási jogosultságot igényelhet, mint a napi szerkesztés. Ha ideiglenesen emelt jogosultság szükséges, az audit után csökkentsd vissza a szükséges minimumra.
+
+### 3. Application Password
+
+```text
+Bricks → AI → Configuration → Create a credential
+```
+
+- válaszd ki a megfelelő WordPress usert;
+- adj nevet a credentialnek, pl. `Codex bootstrap`;
+- Generate password;
+- az Application Passwordöt azonnal mentsd el.
+
+A WordPress ezt csak egyszer mutatja.
+
+### 4. Miért a “Paste config” módszert ajánljuk?
+
+A Bricks **Copy a prompt** kényelmi opciója tartalmazhatja:
+
+- a WordPress usernevet;
+- az Application Passwordöt.
+
+Ezért a starter alapértelmezett workflow-ja:
+
+> **Codex → Paste config → helyi config.toml**
+
+Így a secret nem kerül bele a chatbe.
+
+### 5. Codex config.toml
+
+Windows:
+
+```text
+%USERPROFILE%\.codex\config.toml
+```
+
+macOS / Linux:
+
+```text
+~/.codex/config.toml
+```
+
+A Bricks által generált blokk alakja például:
+
+```toml
+[mcp_servers.example-site]
+command = "npx"
+args = ["-y", "@automattic/mcp-wordpress-remote@latest"]
+
+[mcp_servers.example-site.env]
+WP_API_URL = "https://example.com/wp-json/mcp/mcp-adapter-default-server"
+WP_API_USERNAME = "dedicated-ai-user"
+WP_API_PASSWORD = "YOUR-LOCAL-APPLICATION-PASSWORD"
+```
+
+**Ne ezt a példát használd élesben.** Mindig a saját Bricks site által generált blokkot használd.
+
+Ha a `config.toml` már sok beállítást tartalmaz:
+
+- ne törölj semmit;
+- ne írd felül;
+- a Bricks blokkot külön `[mcp_servers.<site>]` szekcióként merge-eld;
+- a legegyszerűbb a fájl legaljára tenni;
+- ugyanazt az MCP server nevet ne definiáld kétszer.
+
+A Bricks által local/self-signed HTTPS esetén generált:
+
+```toml
+NODE_TLS_REJECT_UNAUTHORIZED = "0"
+```
+
+beállítást csak az adott MCP server environmentben hagyd. Ne tedd globális shell változóvá.
+
+### 6. Codex reload
+
+Config mentés után:
+
+1. nyiss új Codex chatet;
+2. ha az MCP szerver nem jelenik meg, indítsd újra teljesen a Codexet.
+
+Read-only ellenőrzésként használd a Bricks diagnosztikai ability-k megfelelőit:
+
+- `bricks-start-here`
+- `bricks/get-mcp-version`
+- `bricks/list-ability-status`
+
+---
+
+## Bricks skills telepítése
+
+Előbb az MCP kapcsolat működjön. A skills csak utána következzen.
+
+WordPress:
+
+```text
+Bricks → AI → Skills
+```
+
+<img src="assets/bricks-ai-skills.webp" alt="Bricks AI Skills setup screen" width="820">
+
+1. **Copy skills prompt**
+2. illeszd be Codexbe;
+3. várd meg a telepítést;
+4. indíts új Codex chatet;
+5. **Copy verification prompt**
+6. ellenőrizd, hogy a `bricks-` kezdetű skill-ek ténylegesen betöltődtek.
+
+A Bricks skills repository jelenleg:
+
+https://github.com/codeerhq/bricks-skills
+
+A skills nem adnak új WordPress jogosultságot. Arra tanítják a Codexet, hogyan dolgozzon biztonságosabban és Bricks-specifikusan.
+
+---
+
+## Biztonság
+
+### Soha ne commitolj
+
+- WordPress Application Passwordöt;
+- normál WordPress jelszót;
+- Codex `config.toml` fájlt;
+- API kulcsot;
+- OAuth secretet;
+- hosting / adatbázis credentialt.
+
+Private repository esetén sem.
+
+### Bootstrap audit
+
+A bootstrap audit alatt:
+
+- a WordPress / Bricks site **read-only**;
+- a lokális Codex projektfájlok írhatók;
+- PHP execution tiltott;
+- plugin / theme / server fájl módosítás tiltott;
+- destructive művelet tiltott.
+
+### Production
+
+A Bricks AI abilities jelenleg experimental funkció. Első tesztként local/staging ajánlott.
+
+---
+
+## Meglévő site vs. szűz site
+
+A bootstrap audit automatikusan besorolja a site-ot:
+
+### ESTABLISHED
+
+Van működő publikus webhely és felismerhető vizuális rendszer.
+
+Ilyenkor kötelező:
+
+- publikus frontend böngészős audit;
+- responsive vizsgálat;
+- vizuális pattern library;
+- frontend ↔ Bricks struktúra összerendelés.
+
+### PARTIAL / IN PROGRESS
+
+Vannak használható minták, de a rendszer még nem teljes.
+
+A Codex csak a valóban ismétlődő patternöket tekintheti szabálynak.
+
+### GREENFIELD
+
+Lényegében üres site.
+
+Ilyenkor a Codex:
+
+- nem talál ki nem létező vizuális szabályokat;
+- nem kezeli a default Bricks értékeket kész design systemként;
+- feltérképezi a technikai alapokat;
+- és külön design-system seed / creation workflow-t javasol.
+
+---
+
+## Bricks Theme Styles és külső CSS frameworkök
+
+A design system forrása lehet:
 
 - **BRICKS NATIVE**
 - **EXTERNAL FRAMEWORK**
 - **HYBRID**
 - **CUSTOM CODE DRIVEN**
-- **UNDEFINED / PARTIAL**
+- **UNKNOWN / UNDEFINED**
 
-If a CSS framework plugin — for example Core Framework or an equivalent system — owns tokens, global classes, and variables, those resources must be documented as framework-owned. Codex should not create redundant Bricks-native duplicates or treat provider-owned resources as if Bricks owned them.
+Például Core Framework vagy más teljes CSS framework használata esetén a Codexnek dokumentálnia kell:
 
-### Design-system changes
+- ki a resource owner;
+- hol szerkesztendők a tokenek;
+- mely classok / variable-ök framework-owned elemek;
+- hogyan jelennek meg Bricksben;
+- van-e sync/mirroring;
+- mit nem szabad Bricks-native erőforrásként duplikálni.
 
-Changes to Theme Styles, global classes, global variables, or external framework tokens are **global-impact changes**. They require a targeted impact workflow:
+Theme Style, global class, global variable vagy framework token módosítás **global-impact change**.
 
-1. verify the current state and ownership;
-2. identify dependent pages/templates;
-3. apply the change;
-4. re-read persisted state;
-5. perform representative frontend regression checks at relevant viewports;
-6. refresh project documentation and snapshots.
+Ehhez használd:
 
-See `docs/design-system-lifecycle.md` and `prompts/02-design-system-change-workflow.md`.
+**[Design System Change Workflow](prompts/02-design-system-change-workflow.md)**
 
-Each real website should have its own separate Codex project containing its generated `AGENTS.md` and `docs/bricks/` knowledge base.
+---
 
-### Repository structure
+## Több webhely kezelése
+
+Egy Codex `config.toml` több MCP servert is tartalmazhat:
+
+```toml
+[mcp_servers.site-a]
+...
+
+[mcp_servers.site-b]
+...
+
+[mcp_servers.site-c]
+...
+```
+
+Ajánlott:
+
+- minden site-nak külön MCP server név;
+- minden site-nak külön Codex project;
+- minden projectnek saját `AGENTS.md`;
+- az `AGENTS.md` egyértelműen korlátozza, mely MCP server használható.
+
+---
+
+## Repository struktúra
 
 ```text
 bricks-codex-mcp-starter/
 ├── README.md
 ├── CHANGELOG.md
 ├── .gitignore
+├── assets/
+│   └── bricks-ai-skills.webp
 ├── project-starter/
 │   ├── AGENTS.md
 │   ├── README.md
 │   └── docs/bricks/README.md
 ├── prompts/
+│   ├── COPY-TO-CODEX-SETUP-WIZARD.md
 │   ├── 00-full-site-bootstrap-audit.md
 │   ├── 02-design-system-change-workflow.md
 │   └── 90-agents-maintenance-and-sync.md
@@ -197,28 +433,204 @@ bricks-codex-mcp-starter/
 └── docs/
     ├── setup-bricks-mcp.md
     ├── setup-codex.md
-    ├── security.md
     ├── workflow.md
+    ├── security.md
     └── design-system-lifecycle.md
 ```
 
-### Getting started
+---
 
-1. Connect the target WordPress / Bricks site to Codex through MCP.
-2. Install the Bricks skills for Codex.
-3. Create a dedicated local Codex project folder for the target site.
-4. **Before the first thread**, copy the contents of `project-starter/` into the project root. This gives Codex the full baseline `AGENTS.md` policy from the first task.
-5. Run `prompts/00-full-site-bootstrap-audit.md` in a new Codex thread. The audit refines the existing AGENTS project profile and builds the site-specific `docs/bricks/` knowledge base.
-6. After the bootstrap audit, reduce the MCP user's permissions to the minimum required for normal work.
-7. Future threads should use the active project-root `AGENTS.md` and `docs/bricks/` knowledge base, while re-reading affected live resources before writes.
-8. Use `prompts/90-agents-maintenance-and-sync.md` later when the active AGENTS file needs synchronization after material project changes.
+## Melyik fájlt mikor használd?
 
-### Security
-
-**Never commit WordPress Application Passwords, Codex `config.toml`, API keys, passwords, tokens, or other credentials to this repository.**
-
-Private repository visibility is not a substitute for proper secret hygiene.
+| Fájl | Mikor? |
+|---|---|
+| `project-starter/AGENTS.md` | minden új site projekt indulásakor |
+| `prompts/COPY-TO-CODEX-SETUP-WIZARD.md` | MCP + Codex + skills első összekötésekor |
+| `prompts/00-full-site-bootstrap-audit.md` | az első teljes site auditnál |
+| `prompts/02-design-system-change-workflow.md` | globális design system módosításkor |
+| `prompts/90-agents-maintenance-and-sync.md` | későbbi AGENTS szinkronizáláskor |
+| `templates/documentation-structure.md` | a generált knowledge base felépítésének referenciája |
 
 ---
 
-Status: early working draft / evolving workflow.
+## Gyakori problémák
+
+| Probléma | Ellenőrzés |
+|---|---|
+| Codex nem látja az MCP servert | config mentve? új chat? teljes restart? |
+| MCP connect fail | endpoint / username / Application Password / config syntax |
+| Ability enabled, de nem fut | WordPress capability + Builder Access + Bricks permission |
+| Skills telepítve, de nem látszanak | új Codex chat / szükség esetén restart |
+| Bootstrap nem lát minden plugint/beállítást | az MCP user jogosultsága lehet túl szűk |
+| Codex másik site MCP-jéhez nyúlna | ellenőrizd az AGENTS project isolation szabályt |
+| Design eltér a site-tól | browser visual references + frontend verification szükséges |
+
+---
+
+# English
+
+## What is this?
+
+This repository is a reusable, site-agnostic starter kit for Bricks Builder + Codex MCP projects.
+
+It provides:
+
+- a secure setup wizard;
+- a canonical starter `AGENTS.md`;
+- a full-site bootstrap audit;
+- design-system workflows;
+- documentation templates;
+- security and permission rules.
+
+The goal is to make every new Bricks project start from the same safe, repeatable workflow instead of rebuilding the process from scratch.
+
+Official Bricks documentation:  
+https://academy.bricksbuilder.io/builder/features/ai-abilities-and-skills/
+
+## Recommended quick start
+
+1. Connect the target site in **Bricks → AI → Configuration**.
+2. Create a dedicated WordPress user and Application Password.
+3. Use **Paste config** and merge the generated block into Codex `config.toml`.
+4. Start a new Codex chat; restart Codex if the MCP server is not loaded.
+5. Install and verify Bricks skills from **Bricks → AI → Skills**.
+6. Copy `project-starter/` into a dedicated site-specific Codex project.
+7. Run the full-site bootstrap audit.
+
+### Copy-to-Codex guided setup
+
+**[Open the secure Codex setup wizard](prompts/COPY-TO-CODEX-SETUP-WIZARD.md)**
+
+Copy the complete prompt into a new Codex chat.
+
+The wizard deliberately avoids asking you to paste credentials into chat. It guides you to keep the credential-bearing Bricks config in the local Codex `config.toml`.
+
+## Why use “Paste config” instead of “Copy a prompt”?
+
+Bricks may include the WordPress username and Application Password in its convenience connection prompt.
+
+This starter therefore defaults to:
+
+> **Paste config → local Codex config.toml**
+
+so credentials stay out of the chat transcript.
+
+Windows:
+
+```text
+%USERPROFILE%\.codex\config.toml
+```
+
+macOS / Linux:
+
+```text
+~/.codex/config.toml
+```
+
+After saving, start a new Codex chat. If the MCP server is still missing, fully restart Codex.
+
+## Bricks skills
+
+Get the MCP connection working first.
+
+Then open:
+
+```text
+Bricks → AI → Skills
+```
+
+<img src="assets/bricks-ai-skills.webp" alt="Bricks AI Skills setup screen" width="820">
+
+Copy the install prompt into Codex, install the skills, start a new chat if required, then use the verification prompt.
+
+Skills provide workflow guidance; they do not grant additional WordPress or Bricks permissions.
+
+## Site project initialization
+
+Every real site should have its own Codex project.
+
+Before the first site-specific task, copy:
+
+```text
+project-starter/
+├── AGENTS.md
+└── docs/bricks/README.md
+```
+
+into the new project.
+
+The bootstrap audit then refines the AGENTS project profile and generates the site-specific `docs/bricks/` knowledge base.
+
+## Established vs. greenfield sites
+
+The bootstrap classifies the target project as:
+
+- **ESTABLISHED**
+- **PARTIAL / IN PROGRESS**
+- **GREENFIELD**
+
+Established sites receive full browser/frontend visual auditing.
+
+Greenfield sites do not get invented visual rules. If no real design system exists, design-system creation becomes a separate approved workflow.
+
+## Design-system ownership
+
+The project also classifies design-system authority:
+
+- **BRICKS NATIVE**
+- **EXTERNAL FRAMEWORK**
+- **HYBRID**
+- **CUSTOM CODE DRIVEN**
+- **UNKNOWN / UNDEFINED**
+
+External frameworks such as Core Framework must remain the source of truth for the classes/variables/tokens they own.
+
+Do not create redundant Bricks-native copies.
+
+## Global design-system changes
+
+Theme Styles, global classes, global variables, breakpoints, and framework tokens/classes are treated as global-impact resources.
+
+Use:
+
+**[Design System Change Workflow](prompts/02-design-system-change-workflow.md)**
+
+for controlled changes and frontend regression verification.
+
+## Security
+
+Never commit or paste into chat unless explicitly required by a trusted workflow:
+
+- WordPress Application Passwords;
+- normal WordPress passwords;
+- Codex `config.toml`;
+- API keys/tokens;
+- hosting/database credentials.
+
+Bricks AI abilities are experimental; use local/staging for initial testing.
+
+## Multi-site setup
+
+One global Codex config may contain multiple MCP servers, but each real site should have its own Codex project and its own project-root `AGENTS.md`.
+
+Project instructions should explicitly limit the project to its assigned MCP server.
+
+## Repository map
+
+```text
+project-starter/AGENTS.md                  canonical project policy
+prompts/COPY-TO-CODEX-SETUP-WIZARD.md    interactive secure setup
+prompts/00-full-site-bootstrap-audit.md   initial full discovery
+prompts/02-design-system-change-workflow.md global design-system changes
+prompts/90-agents-maintenance-and-sync.md later AGENTS synchronization
+templates/documentation-structure.md      generated knowledge-base reference
+```
+
+---
+
+## References
+
+- Bricks AI Abilities and Skills: https://academy.bricksbuilder.io/builder/features/ai-abilities-and-skills/
+- Bricks skills repository: https://github.com/codeerhq/bricks-skills
+- OpenAI Codex MCP/config documentation: https://developers.openai.com/learn/docs-mcp
+
