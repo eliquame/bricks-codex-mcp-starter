@@ -6,7 +6,11 @@ This project follows [Semantic Versioning](https://semver.org/) and a Keep a Cha
 
 ## [Unreleased]
 
-New work goes here until the next release.
+### Changed
+- GitHub Actions now pin the runner to `ubuntu-24.04` instead of following the moving `ubuntu-latest` label.
+
+### Fixed
+- Updated `actions/checkout` from v4 to v7 to remove the Node.js 20 deprecation warning on current GitHub-hosted runners.
 
 ## [0.1.0] - 2026-09-24
 
