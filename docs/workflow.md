@@ -82,7 +82,7 @@ It then builds the site-specific knowledge base covering, where relevant:
 - external CSS/design-system providers;
 - site-wide conventions and known exceptions.
 
-For GREENFIELD projects, the audit must not invent a visual language from missing evidence.
+For GREENFIELD projects, the audit must not invent a visual language from missing evidence. If the design system remains UNDEFINED or materially incomplete, run `prompts/11-greenfield-design-system-seed.md` before broad page construction.
 
 ## 6. Reduce permissions after bootstrap
 
@@ -143,3 +143,17 @@ prompts/90-agents-maintenance-and-sync.md
 ```
 
 only after material project evolution makes the site-specific project profile or routing stale.
+
+
+## 11. Use task-specific workflows
+
+After bootstrap, prefer the reusable workflow prompt that matches the task:
+
+- new page: `prompts/20-new-page-build-workflow.md`
+- existing page edit: `prompts/21-existing-page-edit-workflow.md`
+- template change: `prompts/22-template-change-workflow.md`
+- plugin/data architecture change: `prompts/30-plugin-data-architecture-change-workflow.md`
+- WooCommerce: `prompts/31-woocommerce-workflow.md`
+- targeted re-audit: `prompts/80-targeted-reaudit.md`
+
+See `prompts/README.md` for the complete catalog.
